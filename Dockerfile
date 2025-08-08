@@ -1,26 +1,23 @@
+FROM maven:3.9.6-openjdk-17-slim AS build
+
+WORKDIR /app
+
+# Copy pom.xml and download dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy source code and build
+COPY src src
+RUN mvn clean package -DskipTests
+
+# Runtime stage
 FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-# Copy Maven files
-COPY pom.xml .
-COPY .mvn .mvn
-COPY mvnw .
+# Copy the built jar from build stage
+COPY --from=build /app/target/*.jar app.jar
 
-# Make mvnw executable
-RUN chmod +x mvnw
-
-# Download dependencies
-RUN ./mvnw dependency:go-offline -B
-
-# Copy source code
-COPY src src
-
-# Build the app
-RUN ./mvnw clean package -DskipTests
-
-# Expose port
 EXPOSE 8080
 
-# Run the damn thing
-CMD ["java", "-jar", "target/*.jar"]
+CMD ["java", "-jar", "app.jar"]
