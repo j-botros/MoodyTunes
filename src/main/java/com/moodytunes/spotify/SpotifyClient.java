@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.moodytunes.MoodyTunes;
+import com.moodytunes.MoodyTunesApp;
 import com.moodytunes.weather.AnalyzeWeather;
 
 // FRONTEND:
@@ -68,7 +68,7 @@ public class SpotifyClient {
 
         HttpResponse<String> responseJson;
         try {
-            responseJson = MoodyTunes.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+            responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
                 System.out.println("(getUserId) Bad Response status code");
@@ -92,7 +92,7 @@ public class SpotifyClient {
             return null;
         }
 
-        SpotifyData.UserData userData = MoodyTunes.GSON.fromJson(responseJson.body(), SpotifyData.UserData.class);
+        SpotifyData.UserData userData = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.UserData.class);
 
         if (userData == null || userData.id == null) {
             System.out.println("(getUserId) Failed to get user ID: Empty or malformed response.");
@@ -123,7 +123,7 @@ public class SpotifyClient {
 
         HttpResponse<String> responseJson;
         try {
-            responseJson = MoodyTunes.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+            responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
                 System.out.println("(getTop5Items) Bad Response status code");
@@ -147,7 +147,7 @@ public class SpotifyClient {
             return null;
         }
 
-        SpotifyData.UserTopItems topItems = MoodyTunes.GSON.fromJson(responseJson.body(), SpotifyData.UserTopItems.class);
+        SpotifyData.UserTopItems topItems = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.UserTopItems.class);
 
         String trackIds = new String();
         for (int i = 0; i < limit; i++) {
@@ -228,7 +228,7 @@ public class SpotifyClient {
 
         HttpResponse<String> responseJson;
         try {
-            responseJson = MoodyTunes.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+            responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
                 System.out.println("(recommendTracks) Bad Response status code");
@@ -252,7 +252,7 @@ public class SpotifyClient {
             return null;
         }
 
-        SpotifyData.RecommendedSongs recommendedSongs = MoodyTunes.GSON.fromJson(responseJson.body(), SpotifyData.RecommendedSongs.class);
+        SpotifyData.RecommendedSongs recommendedSongs = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.RecommendedSongs.class);
 
         String[] trackUris = new String[limit];
         for (int i = 0; i < limit; i++) {
@@ -277,7 +277,7 @@ public class SpotifyClient {
         bodyMap.put("collaborative", collaborative);
         bodyMap.put("description", playlistDescription);
 
-        final String jsonBody = MoodyTunes.GSON.toJson(bodyMap);
+        final String jsonBody = MoodyTunesApp.GSON.toJson(bodyMap);
         final HttpRequest.BodyPublisher bodyPublisher = HttpRequest.BodyPublishers.ofString(jsonBody);
         
         HttpRequest request;
@@ -297,7 +297,7 @@ public class SpotifyClient {
 
         HttpResponse<String> responseJson;
         try {
-            responseJson = MoodyTunes.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+            responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
                 System.out.println("(createEmptyPlaylist) Bad Response status code");
@@ -321,7 +321,7 @@ public class SpotifyClient {
             return null;
         }
 
-        SpotifyData.PlaylistData playlist = MoodyTunes.GSON.fromJson(responseJson.body(), SpotifyData.PlaylistData.class);
+        SpotifyData.PlaylistData playlist = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.PlaylistData.class);
 
         if (playlist == null || playlist.id == null) {
             System.out.println("(createEmptyPlaylist) Playlist creation failed: Empty or malformed response.");
@@ -338,7 +338,7 @@ public class SpotifyClient {
         bodyMap.put("uris", Arrays.asList(tracks));
         bodyMap.put("position", 0);
 
-        final String jsonBody = MoodyTunes.GSON.toJson(bodyMap);
+        final String jsonBody = MoodyTunesApp.GSON.toJson(bodyMap);
         final HttpRequest.BodyPublisher bodyPublisher = HttpRequest.BodyPublishers.ofString(jsonBody);
         
         HttpRequest request;
@@ -357,7 +357,7 @@ public class SpotifyClient {
         }
 
         try {
-            HttpResponse<String> responseJson = MoodyTunes.CLIENT.send(request, BodyHandlers.ofString());
+            HttpResponse<String> responseJson = MoodyTunesApp.CLIENT.send(request, BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
                 System.out.println("(addToPlaylist) Bad Response status code");

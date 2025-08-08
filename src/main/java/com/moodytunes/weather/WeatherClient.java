@@ -7,7 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Properties;
 
-import com.moodytunes.MoodyTunes;
+import com.moodytunes.MoodyTunesApp;
 
 public class WeatherClient {
     private static final String API_KEY = loadAPIKey();
@@ -25,7 +25,7 @@ public class WeatherClient {
             return null;
         }
 
-        WeatherData data = MoodyTunes.GSON.fromJson(jsonResponse, WeatherData.class);
+        WeatherData data = MoodyTunesApp.GSON.fromJson(jsonResponse, WeatherData.class);
 
         return data;
     }
@@ -73,7 +73,7 @@ public class WeatherClient {
         // Collect Response
         HttpResponse<String> responseJson;
         try {
-            responseJson = MoodyTunes.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+            responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
         }
         catch (InterruptedException e) {
             System.out.println("(getWeatherJSON) Response interrupted: " + e);

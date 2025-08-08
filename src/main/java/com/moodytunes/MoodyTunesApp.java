@@ -3,11 +3,19 @@ package com.moodytunes;
 import java.io.UncheckedIOException;
 import java.net.http.HttpClient;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import com.google.gson.Gson;
 
-public class MoodyTunes {
+@SpringBootApplication
+public class MoodyTunesApp {
     public static final HttpClient CLIENT = createHttpClient();
     public static final Gson GSON = createGson();
+
+    public static void main(String[] args) {
+        SpringApplication.run(MoodyTunesApp.class, args);
+    }
 
     private static HttpClient createHttpClient() {
         HttpClient client;
