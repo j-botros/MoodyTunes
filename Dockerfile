@@ -1,24 +1,19 @@
 FROM openjdk:17-jdk-slim
 
+WORKDIR /app
+
 # Install Maven
 RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
-
-# Copy pom.xml first for better caching
+# Copy and build
 COPY pom.xml .
-
-# Download dependencies
-RUN mvn dependency:go-offline -B
-
-# Copy source code
 COPY src src
 
-# Build the application
+# Build the app
 RUN mvn clean package -DskipTests
 
-# Expose port
-EXPOSE 8080
+# List what got built (for debugging)
+RUN ls -la target/
 
-# Run the application
-CMD ["java", "-jar", "target/*.jar"]
+# Run with explicit jar name based on your pom.xml artifactId
+CMD java -jar target/moodytunes-*.jar
