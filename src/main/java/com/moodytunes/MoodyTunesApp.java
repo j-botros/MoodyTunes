@@ -5,10 +5,12 @@ import java.net.http.HttpClient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.google.gson.Gson;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.moodytunes"})
 public class MoodyTunesApp {
     public static final HttpClient CLIENT = createHttpClient();
     public static final Gson GSON = createGson();
