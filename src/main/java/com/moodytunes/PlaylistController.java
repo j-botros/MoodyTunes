@@ -12,8 +12,10 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class PlaylistController {
     @GetMapping("/create-playlist")
-    public String showForm() {
+    public String showForm(HttpSession session) {
         System.out.println("GET /create-playlist called!");
+        System.out.println("Session ID: " + session.getId());
+        System.out.println("Access token in session: " + session.getAttribute("access_token"));
         return "playlist-form";
     }
 
