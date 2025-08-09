@@ -39,7 +39,7 @@ public class SpotifyService {
     @Value("${SPOTIFY_CLIENT_SECRET}")
     private String clientSecret;
 
-    public static void handlePlaylistRedirect(String accessToken, String location, String playlistName, String playlistDesc) {
+    public void handlePlaylistRedirect(String accessToken, String location, String playlistName, String playlistDesc) {
         final String userId = getUserId(accessToken);
         final String top5 = getTop5Items(accessToken);
         final String[] recTracks = recommendTracks(accessToken, top5, location);

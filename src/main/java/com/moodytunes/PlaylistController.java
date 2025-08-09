@@ -1,5 +1,6 @@
 package com.moodytunes;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,9 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PlaylistController {
+    @Autowired
+    private SpotifyService spotifyService;
+
     @GetMapping("/create-playlist")
     public String showForm(HttpSession session) {
         System.out.println("GET /create-playlist called!");
@@ -24,7 +28,7 @@ public class PlaylistController {
         System.out.println("POST /create-playlist called!");
         final String accessToken = (String) session.getAttribute("access_token");
         
-        SpotifyService.handlePlaylistRedirect(accessToken, location, name, desc);
+        spotifyService.handlePlaylistRedirect(accessToken, location, name, desc);
         
         return "redirect:/";
     }
