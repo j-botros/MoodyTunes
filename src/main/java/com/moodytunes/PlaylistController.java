@@ -13,11 +13,13 @@ import jakarta.servlet.http.HttpSession;
 public class PlaylistController {
     @GetMapping("/create-playlist")
     public String showForm() {
+        System.out.println("GET /create-playlist called!");
         return "playlist-form";
     }
 
     @PostMapping("/create-playlist")
     public String buildPlaylist(@RequestParam String name, @RequestParam String desc, @RequestParam String location, HttpSession session) {
+        System.out.println("POST /create-playlist called!");
         final String accessToken = (String) session.getAttribute("access_token");
         
         SpotifyService.handlePlaylistRedirect(accessToken, location, name, desc);

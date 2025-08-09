@@ -15,6 +15,7 @@ public class CallbackController {
         String accessToken = SpotifyService.exchangeCodeForToken(code);
         session.setAttribute("access_token", accessToken);
 
+        System.out.println("redirecting to create-playlist!");
         return "redirect:/create-playlist";
     }
 }
