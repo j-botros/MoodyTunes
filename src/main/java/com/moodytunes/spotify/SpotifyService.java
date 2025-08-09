@@ -34,10 +34,10 @@ import com.moodytunes.weather.AnalyzeWeather;
 @Service
 public class SpotifyService {
     @Value("${SPOTIFY_CLIENT_ID}")
-    private static String clientId;
+    private String clientId;
     
     @Value("${SPOTIFY_CLIENT_SECRET}")
-    private static String clientSecret;
+    private String clientSecret;
 
     public static void handlePlaylistRedirect(String accessToken, String location, String playlistName, String playlistDesc) {
         final String userId = getUserId(accessToken);
@@ -47,7 +47,7 @@ public class SpotifyService {
         addToPlaylist(accessToken, recTracks, playlistId);
     }
 
-    public static String exchangeCodeForToken(String code) {
+    public String exchangeCodeForToken(String code) {
         final String grantType = "authorization_code";
         final String redirectUri = "https://moodytunes-xqx9.onrender.com/callback";
         
