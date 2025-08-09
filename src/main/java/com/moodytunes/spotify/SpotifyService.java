@@ -48,40 +48,35 @@ public class SpotifyService {
     }
 
     public static String exchangeCodeForToken(String code) {
-        // Body parameters:
         final String grantType = "authorization_code";
-        // authCode = code
         final String redirectUri = "https://moodytunes-xqx9.onrender.com/callback";
-
-        // Header parameters:
-        final String authorization = Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes()); // base 64 encoded client_id:client_secret
-        final String contentType = "application/x-www-form-urlencoded";
-
-        final String urlString = "https://accounts.spotify.com/api/token";
-
-        Map<String, Object> bodyMap = new HashMap<>();
-        bodyMap.put("grant_type", grantType);
-        bodyMap.put("redirect_uri", redirectUri);
-        bodyMap.put("code", code);
-
-        final String jsonBody = MoodyTunesApp.GSON.toJson(bodyMap);
-        final HttpRequest.BodyPublisher bodyPublisher = HttpRequest.BodyPublishers.ofString(jsonBody);
+        
+        // Create form data string instead of JSON
+        final String formData = "grant_type=" + grantType +
+                            "&code=" + code +
+                            "&redirect_uri=" + redirectUri;
+        
+        final String authorization = Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes());
         
         HttpRequest request;
         try {
             request = HttpRequest.newBuilder()
-                .uri(URI.create(urlString))
-                .header("Content-Type", contentType)
+                .uri(URI.create("https://accounts.spotify.com/api/token"))
+                .header("Content-Type", "application/x-www-form-urlencoded")
                 .header("Authorization", "Basic " + authorization)
-                .POST(bodyPublisher)
+                .POST(HttpRequest.BodyPublishers.ofString(formData)) // Form data, not JSON
                 .build()
             ;
+
+            if (request == null) {
+                System.out.println("(exchangeCodeForToken) Null POST request.");
+            }
         }
         catch (IllegalArgumentException e) {
             System.out.println("(exchangeCodeForToken) Invalid URI: " + e);
             return null;
         }
-
+        
         HttpResponse<String> responseJson;
         try {
             responseJson = MoodyTunesApp.CLIENT.send(request, BodyHandlers.ofString());
