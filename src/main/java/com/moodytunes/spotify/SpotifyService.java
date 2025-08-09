@@ -227,7 +227,8 @@ public class SpotifyService {
 
     private static String[] recommendTracks(String accessToken, String tracks, String location) {
         final Recommendation recommendation = new Recommendation();
-        AnalyzeWeather.recommend(recommendation, location);
+        AnalyzeWeather analyzer = new AnalyzeWeather();
+        analyzer.recommend(recommendation, location);
 
         final int limit = 20;
         final String market = "US";

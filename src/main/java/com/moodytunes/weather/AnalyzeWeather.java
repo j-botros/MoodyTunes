@@ -1,11 +1,16 @@
 package com.moodytunes.weather;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.moodytunes.spotify.Recommendation;
 
 public class AnalyzeWeather {
-    public static void recommend(Recommendation recommendation, String location) {
+    @Autowired
+    WeatherService weatherService;
+    
+    public void recommend(Recommendation recommendation, String location) {
         // Get weather
-        WeatherData weatherData = WeatherService.fetchWeatherData(location);
+        WeatherData weatherData = weatherService.fetchWeatherData(location);
         if (weatherData == null) {
             System.out.println("(recommend) Null WeatherData");
             return;

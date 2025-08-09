@@ -13,11 +13,12 @@ import com.moodytunes.MoodyTunesApp;
 @Service
 public class WeatherService {
     @Value("${OWM_API_KEY}")
-    private static String OwmApiKey;
+    private String OwmApiKey;
 
-    public static WeatherData fetchWeatherData(String location) {
+    public WeatherData fetchWeatherData(String location) {
         // Read OWM API Key
         if (OwmApiKey == null) {
+            System.out.println("(fetchWeatherData) Null OWM Api Key.");
             return null;
         }
 
@@ -33,7 +34,7 @@ public class WeatherService {
         return data;
     }
 
-    private static String getWeatherJSON(String location) {
+    private String getWeatherJSON(String location) {
         // Make GET Request
         HttpRequest request;
         try {
