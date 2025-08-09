@@ -3,7 +3,7 @@ const REDIRECT_URI = "https://moodytunes-xqx9.onrender.com/callback"
 
 function redirectToSpotify() {
     const responseType = "code";
-    const scope = "user-read-email user-top-tracks user-read-private playlist-modify-private playlist-modify-public";
+    const scope = "user-top-read user-read-private playlist-modify-public";
 
     const authUrl = "https://accounts.spotify.com/authorize?" +
         "response_type=" + responseType +
