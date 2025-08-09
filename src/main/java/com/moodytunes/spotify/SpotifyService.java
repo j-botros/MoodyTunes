@@ -82,7 +82,8 @@ public class SpotifyService {
             responseJson = MoodyTunesApp.CLIENT.send(request, BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
-                System.out.println("(exchangeCodeForToken) Bad Response status code");
+                System.out.println("(exchangeCodeForToken) Bad Response status code: " + responseJson.statusCode());
+                System.out.println("Response body: " + responseJson.body());
                 return null;
             }
         }
@@ -135,7 +136,8 @@ public class SpotifyService {
             responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
-                System.out.println("(getUserId) Bad Response status code");
+                System.out.println("(getUserId) Bad Response status code: " + responseJson.statusCode());
+                System.out.println("Response body: " + responseJson.body());
                 return null;
             }
         }
@@ -190,7 +192,8 @@ public class SpotifyService {
             responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
-                System.out.println("(getTop5Items) Bad Response status code");
+                System.out.println("(getTop5Items) Bad Response status code: " + responseJson.statusCode());
+                System.out.println("Response body: " + responseJson.body());
                 return null;
             }
         }
@@ -295,7 +298,8 @@ public class SpotifyService {
             responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
-                System.out.println("(recommendTracks) Bad Response status code");
+                System.out.println("(recommendTracks) Bad Response status code: " + responseJson.statusCode());
+                System.out.println("Response body: " + responseJson.body());
                 return null;
             }
         }
@@ -364,7 +368,8 @@ public class SpotifyService {
             responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
-                System.out.println("(createEmptyPlaylist) Bad Response status code");
+                System.out.println("(createEmptyPlaylist) Bad Response status code: " + responseJson.statusCode());
+                System.out.println("Response body: " + responseJson.body());
                 return null;
             }
         }
@@ -424,7 +429,8 @@ public class SpotifyService {
             HttpResponse<String> responseJson = MoodyTunesApp.CLIENT.send(request, BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
-                System.out.println("(addToPlaylist) Bad Response status code");
+                System.out.println("(addToPlaylist) Bad Response status code: " + responseJson.statusCode());
+                System.out.println("Response body: " + responseJson.body());
             }
         }
         catch (InterruptedException e) {
