@@ -1,20 +1,23 @@
 package com.moodytunes.weather;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Properties;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.moodytunes.MoodyTunesApp;
 
-public class WeatherClient {
-    private static final String API_KEY = loadAPIKey();
-    
+@Service
+public class WeatherService {
+    @Value("${OWM_API_KEY}")
+    private static String OwmApiKey;
+
     public static WeatherData fetchWeatherData(String location) {
         // Read OWM API Key
-        if (API_KEY == null) {
+        if (OwmApiKey == null) {
             return null;
         }
 
@@ -30,34 +33,11 @@ public class WeatherClient {
         return data;
     }
 
-    private static String loadAPIKey() {
-        Properties secrets = new Properties();
-        try (InputStream input = WeatherClient.class.getClassLoader().getResourceAsStream("secrets.properties")) {
-            if (input == null) {
-                System.out.println("(loadAPIKey) Could not find secrets.properties in resources.");
-                return null;
-            }
-            secrets.load(input);
-        }
-        catch (Exception e) {
-            System.out.println("(loadAPIKey) Error reading secrets.properties: " + e.getMessage());
-            return null;
-        }
-
-        String apiKey = secrets.getProperty("OWM_API_KEY");
-        if (apiKey == null) {
-            System.out.println("(loadAPIKey) Key not found in secrets.properties.");
-            return null;
-        }
-
-        return apiKey;
-    }
-
     private static String getWeatherJSON(String location) {
         // Make GET Request
         HttpRequest request;
         try {
-            String uriString = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + API_KEY;
+            String uriString = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + OwmApiKey;
 
             request = HttpRequest.newBuilder()
             .uri(URI.create(uriString))

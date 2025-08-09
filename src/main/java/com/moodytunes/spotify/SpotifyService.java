@@ -6,24 +6,24 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.moodytunes.MoodyTunesApp;
 import com.moodytunes.weather.AnalyzeWeather;
 
 // FRONTEND:
 // 1: Receive authorization code and location from website
-// 2: Exchange auth code for access json
-// 3. Get access token from access json
 
 // -----------
 
 // BACKEND:
+// 2: Exchange auth code for access json
+// 3. Get access token from access json
 // 4. Get User ID
 // 5. Get top 5 items from user
 // 6. Get weather recommendations
@@ -31,25 +31,94 @@ import com.moodytunes.weather.AnalyzeWeather;
 // 8. Create empty playlist
 // 9. Add recommendations to playlist
 
-@RestController
-public class SpotifyClient {
-    private static String accessToken;
+@Service
+public class SpotifyService {
+    @Value("${SPOTIFY_CLIENT_ID}")
+    private static String clientId;
     
-    @RequestMapping("/create-playlist")
-    public void buildPlaylist(@RequestBody AppData request) {
-        accessToken = request.token;
-        String location = request.location;
-        String playlistName = request.playlist_name;
-        String playlistDesc = request.playlist_desc;
+    @Value("${SPOTIFY_CLIENT_SECRET}")
+    private static String clientSecret;
 
-        String userId = getUserId();
-        String top5 = getTop5Items();
-        String[] recTracks = recommendTracks(top5, location);
-        String playlistId = createEmptyPlaylist(userId, playlistName, playlistDesc);
-        addToPlaylist(recTracks, playlistId);
+    public static void handlePlaylistRedirect(String accessToken, String location, String playlistName, String playlistDesc) {
+        final String userId = getUserId(accessToken);
+        final String top5 = getTop5Items(accessToken);
+        final String[] recTracks = recommendTracks(accessToken, top5, location);
+        final String playlistId = createEmptyPlaylist(accessToken, userId, playlistName, playlistDesc);
+        addToPlaylist(accessToken, recTracks, playlistId);
     }
 
-    private static String getUserId() {
+    public static String exchangeCodeForToken(String code) {
+        // Body parameters:
+        final String grantType = "authorization_code";
+        // authCode = code
+        final String redirectUri = "https://moodytunes-xqx9.onrender.com/callback";
+
+        // Header parameters:
+        final String authorization = Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes()); // base 64 encoded client_id:client_secret
+        final String contentType = "application/x-www-form-urlencoded";
+
+        final String urlString = "https://accounts.spotify.com/api/token";
+
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put("grant_type", grantType);
+        bodyMap.put("redirect_uri", redirectUri);
+        bodyMap.put("code", code);
+
+        final String jsonBody = MoodyTunesApp.GSON.toJson(bodyMap);
+        final HttpRequest.BodyPublisher bodyPublisher = HttpRequest.BodyPublishers.ofString(jsonBody);
+        
+        HttpRequest request;
+        try {
+            request = HttpRequest.newBuilder()
+                .uri(URI.create(urlString))
+                .header("Content-Type", contentType)
+                .header("Authorization", "Basic " + authorization)
+                .POST(bodyPublisher)
+                .build()
+            ;
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("(exchangeCodeForToken) Invalid URI: " + e);
+            return null;
+        }
+
+        HttpResponse<String> responseJson;
+        try {
+            responseJson = MoodyTunesApp.CLIENT.send(request, BodyHandlers.ofString());
+
+            if (notSuccessful(responseJson.statusCode())) {
+                System.out.println("(exchangeCodeForToken) Bad Response status code");
+                return null;
+            }
+        }
+        catch (InterruptedException e) {
+            System.out.println("(exchangeCodeForToken) Response interrupted: " + e);
+            return null;
+        }
+        catch (IOException e) {
+            System.out.println("(exchangeCodeForToken) Failed to Send or Receive response: " + e);
+            return null;
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("(exchangeCodeForToken) Invalid Response 'request' argument: " + e);
+            return null;
+        }
+        catch (SecurityException e) {
+            System.out.println("(exchangeCodeForToken) Access denied: " + e);
+            return null;
+        }
+
+        SpotifyData.AccessData accessData = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.AccessData.class);
+
+        if (accessData == null || accessData.access_token == null) {
+            System.out.println("(exchangeCodeForToken) Failed to return access data and/or access token.");
+            return null;
+        }
+
+        return accessData.access_token;
+    }
+
+    private static String getUserId(String accessToken) {
         final String urlString = "https://api.spotify.com/v1/me";
 
         HttpRequest request;
@@ -101,7 +170,7 @@ public class SpotifyClient {
         return userData.id;
     }
 
-    private static String getTop5Items() {
+    private static String getTop5Items(String accessToken) {
         final int limit = 5;
         final String urlString = "https://api.spotify.com/v1/me/top/tracks"
             + "?limit=" + limit
@@ -158,7 +227,7 @@ public class SpotifyClient {
         return trackIds;
     }
 
-    private static String[] recommendTracks(String tracks, String location) {
+    private static String[] recommendTracks(String accessToken, String tracks, String location) {
         final Recommendation recommendation = new Recommendation();
         AnalyzeWeather.recommend(recommendation, location);
 
@@ -262,7 +331,7 @@ public class SpotifyClient {
         return trackUris;
     }
 
-    private static String createEmptyPlaylist(String userId, String playlistName, String playlistDescription) {
+    private static String createEmptyPlaylist(String accessToken, String userId, String playlistName, String playlistDescription) {
         if (userId == null || userId.isBlank()) return null;
         if (playlistName == null || playlistName.isBlank()) return null;
         if (playlistDescription == null || playlistDescription.isBlank()) return null;
@@ -330,7 +399,7 @@ public class SpotifyClient {
         return playlist.id;
     }
 
-    private static void addToPlaylist(String[] tracks, String playlistId) {
+    private static void addToPlaylist(String accessToken, String[] tracks, String playlistId) {
         // Add tracks to playlist
         final String urlString = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks";
 
@@ -377,7 +446,7 @@ public class SpotifyClient {
         }
     }
 
-    private static boolean notSuccessful(int statusCode) {
+    public static boolean notSuccessful(int statusCode) {
         return (statusCode != 200 && statusCode != 201);
     }
 

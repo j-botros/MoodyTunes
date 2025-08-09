@@ -5,7 +5,7 @@ import com.moodytunes.spotify.Recommendation;
 public class AnalyzeWeather {
     public static void recommend(Recommendation recommendation, String location) {
         // Get weather
-        WeatherData weatherData = WeatherClient.fetchWeatherData(location);
+        WeatherData weatherData = WeatherService.fetchWeatherData(location);
         if (weatherData == null) {
             System.out.println("(recommend) Null WeatherData");
             return;
