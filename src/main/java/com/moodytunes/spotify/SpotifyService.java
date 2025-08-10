@@ -220,13 +220,22 @@ public class SpotifyService {
 
         SpotifyData.UserTopItems topItems = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.UserTopItems.class);
 
-        String trackIds = new String();
-        for (int i = 0; i < limit - 1; i++) {
-            trackIds += topItems.items[i].id + ",";
-        }
-        trackIds += topItems.items[limit - 1].id;
+        StringBuilder trackIds = new StringBuilder();
+        boolean first = true;
 
-        return trackIds;
+        for (int i = 0; i < limit; i++) {
+            if (validateTrackId(topItems.items[i].id, accessToken)) {
+                if (!first) {
+                    trackIds.append(",");
+                }
+                trackIds.append(topItems.items[i].id);
+                first = false;
+            }
+        }
+
+        String result = trackIds.toString();
+
+        return result;
     }
 
     private String[] recommendTracks(String accessToken, String tracks, String location) {
@@ -316,6 +325,11 @@ public class SpotifyService {
                 .GET()
                 .build()
             ;
+
+            if (request == null) {
+                System.out.println("(recommendTracks) Null request.");
+                return null;
+            }
         }
         catch (IllegalArgumentException e) {
             System.out.println("(recommendTracks) Invalid URI: " + e);
@@ -479,6 +493,27 @@ public class SpotifyService {
 
     public static boolean notSuccessful(int statusCode) {
         return (statusCode != 200 && statusCode != 201);
+    }
+
+    public static boolean validateTrackId(String trackId, String accessToken) {
+        final String urlString = "https://api.spotify.com/v1/tracks/";
+
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(urlString + trackId))
+            .header("Authorization", "Bearer " + accessToken)
+            .GET()
+            .build();
+
+        try {
+            HttpResponse<String> response = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+            int statusCode = response.statusCode();
+
+            return (!notSuccessful(statusCode));
+        }
+        catch (IOException | InterruptedException e) {
+            System.out.println("Error checking track ID " + trackId + ": " + e.getMessage());
+            return false;
+        }
     }
 
     public class AppData {
