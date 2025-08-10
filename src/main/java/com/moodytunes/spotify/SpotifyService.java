@@ -264,7 +264,7 @@ public class SpotifyService {
         System.out.println("Genre: " + genre);
         final String urlString = "https://api.spotify.com/v1/recommendations"
             //+ "?market=" + market
-            + "?seed_genres=" + genre
+            + "?seed_genres=pop" //+ genre
             /*+ "&target_danceability=" + danceability
             + "&target_energy=" + energy
             + "&target_loudness=" + loudness
@@ -300,6 +300,8 @@ public class SpotifyService {
                 System.out.println("(recommendTracks) Bad Response status code: " + responseJson.statusCode());
                 System.out.println("Response body: " + responseJson.body());
                 System.out.println("Request URL: " + urlString);
+                System.out.println("Request Headers: " + request.headers().map());
+                System.out.println("Full Response: " + responseJson);
                 return null;
             }
         }
