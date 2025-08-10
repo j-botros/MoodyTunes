@@ -263,7 +263,7 @@ public class SpotifyService {
         final String genre = recommendation.getGenre();
         System.out.println("Genre: " + genre);
         final String urlString = "https://api.spotify.com/v1/recommendations"
-            + "&market=" + market
+            + "?market=" + market
             + "&seed_genres=" + genre
             + "&target_danceability=" + danceability
             + "&target_energy=" + energy
