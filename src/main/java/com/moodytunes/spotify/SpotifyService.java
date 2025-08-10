@@ -2,7 +2,6 @@ package com.moodytunes.spotify;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
@@ -46,6 +45,7 @@ public class SpotifyService {
 
     public void handlePlaylistRedirect(String accessToken, String location, String playlistName, String playlistDesc) {
         final String userId = getUserId(accessToken);
+        getTop5Items(accessToken);
         testAuth(accessToken);
         final String[] recTracks = recommendTracks(accessToken, location);
         final String playlistId = createEmptyPlaylist(accessToken, userId, playlistName, playlistDesc);
@@ -63,8 +63,7 @@ public class SpotifyService {
                 .build()
             ;
             
-            HttpClient basicClient = HttpClient.newHttpClient();
-            HttpResponse<String> response = basicClient.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("Auth test status: " + response.statusCode());
             System.out.println("Auth test body: " + response.body());
             
@@ -193,7 +192,6 @@ public class SpotifyService {
         return userData.id;
     }
 
-    /*
     private String getTop5Items(String accessToken) {
         final int limit = 5;
         final String urlString = "https://api.spotify.com/v1/me/top/tracks"
@@ -217,6 +215,7 @@ public class SpotifyService {
         HttpResponse<String> responseJson;
         try {
             responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("top5 json: " + responseJson);
 
             if (notSuccessful(responseJson.statusCode())) {
                 System.out.println("(getTop5Items) Bad Response status code: " + responseJson.statusCode());
@@ -260,7 +259,6 @@ public class SpotifyService {
 
         return result;
     }
-    */
 
     private String[] recommendTracks(String accessToken, String location) {
         final Recommendation recommendation = new Recommendation();
@@ -317,8 +315,7 @@ public class SpotifyService {
 
         HttpResponse<String> responseJson;
         try {
-            HttpClient basicClient = HttpClient.newHttpClient();
-            responseJson = basicClient.send(request, HttpResponse.BodyHandlers.ofString());
+            responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
                 System.out.println("(recommendTracks) Bad Response status code: " + responseJson.statusCode());
