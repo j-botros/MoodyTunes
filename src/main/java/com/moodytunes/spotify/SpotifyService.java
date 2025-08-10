@@ -45,9 +45,29 @@ public class SpotifyService {
 
     public void handlePlaylistRedirect(String accessToken, String location, String playlistName, String playlistDesc) {
         final String userId = getUserId(accessToken);
+        testAuth(accessToken);
         final String[] recTracks = recommendTracks(accessToken, location);
         final String playlistId = createEmptyPlaylist(accessToken, userId, playlistName, playlistDesc);
         addToPlaylist(accessToken, recTracks, playlistId);
+    }
+
+    private void testAuth(String accessToken) {
+        String url = "https://api.spotify.com/v1/recommendations/available-genre-seeds";
+        
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Authorization", "Bearer " + accessToken)
+                .GET()
+                .build();
+                
+            HttpResponse<String> response = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("Auth test status: " + response.statusCode());
+            System.out.println("Auth test body: " + response.body());
+            
+        } catch (Exception e) {
+            System.out.println("Auth test error: " + e);
+        }
     }
 
     public String exchangeCodeForToken(String code) {
