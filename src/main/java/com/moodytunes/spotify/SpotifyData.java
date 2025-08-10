@@ -3,12 +3,18 @@ package com.moodytunes.spotify;
 import com.google.gson.annotations.SerializedName;
 
 public class SpotifyData {
-    public static class AccessData {
+    public static class UserAccessData {
         public String access_token;
         public String token_type;
         public String scope;
         public int expires_in;
         public String refresh_token;
+    }
+
+    public static class ClientAccessData {
+        public String access_token;
+        public String token_type;
+        public int expires_in;
     }
 
     public static class UserData {

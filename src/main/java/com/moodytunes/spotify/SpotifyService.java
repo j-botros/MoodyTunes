@@ -43,13 +43,14 @@ public class SpotifyService {
     @Value("${SPOTIFY_CLIENT_SECRET}")
     private String clientSecret;
 
-    public void handlePlaylistRedirect(String accessToken, String location, String playlistName, String playlistDesc) {
-        final String userId = getUserId(accessToken);
-        getTop5Items(accessToken);
-        testAuth(accessToken);
-        final String[] recTracks = recommendTracks(accessToken, location);
-        final String playlistId = createEmptyPlaylist(accessToken, userId, playlistName, playlistDesc);
-        addToPlaylist(accessToken, recTracks, playlistId);
+    public void handlePlaylistRedirect(String userAccessToken, String location, String playlistName, String playlistDesc) {
+        final String clientAccessToken = exchangeCredentialsForToken();
+        final String userId = getUserId(userAccessToken);
+        getTop5Items(userAccessToken);
+        testAuth(clientAccessToken);
+        final String[] recTracks = recommendTracks(clientAccessToken, location);
+        final String playlistId = createEmptyPlaylist(userAccessToken, userId, playlistName, playlistDesc);
+        addToPlaylist(userAccessToken, recTracks, playlistId);
     }
 
     private void testAuth(String accessToken) {
@@ -70,6 +71,70 @@ public class SpotifyService {
         } catch (Exception e) {
             System.out.println("Auth test error: " + e);
         }
+    }
+
+    public String exchangeCredentialsForToken() {
+        final String grantType = "client_credentials";
+        final String urlString = "https://accounts.spotify.com/api/token";
+
+        final String formData = "grant_type=" + grantType;
+
+        final String authorization = Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes());
+
+        HttpRequest request;
+        try {
+            request = HttpRequest.newBuilder()
+                .uri(URI.create("https://accounts.spotify.com/api/token"))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .header("Authorization", "Basic " + authorization)
+                .POST(HttpRequest.BodyPublishers.ofString(formData)) // Form data, not JSON
+                .build()
+            ;
+
+            if (request == null) {
+                System.out.println("(exchangeCredentialsForToken) Null POST request.");
+            }
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("(exchangeCredentialsForToken) Invalid URI: " + e);
+            return null;
+        }
+
+        HttpResponse<String> responseJson;
+        try {
+            responseJson = MoodyTunesApp.CLIENT.send(request, BodyHandlers.ofString());
+
+            if (notSuccessful(responseJson.statusCode())) {
+                System.out.println("(exchangeCredentialsForToken) Bad Response status code: " + responseJson.statusCode());
+                System.out.println("Response body: " + responseJson.body());
+                return null;
+            }
+        }
+        catch (InterruptedException e) {
+            System.out.println("(exchangeCredentialsForToken) Response interrupted: " + e);
+            return null;
+        }
+        catch (IOException e) {
+            System.out.println("(exchangeCredentialsForToken) Failed to Send or Receive response: " + e);
+            return null;
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("(exchangeCredentialsForToken) Invalid Response 'request' argument: " + e);
+            return null;
+        }
+        catch (SecurityException e) {
+            System.out.println("(exchangeCredentialsForToken) Access denied: " + e);
+            return null;
+        }
+
+        SpotifyData.ClientAccessData accessData = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.ClientAccessData.class);
+
+        if (accessData == null || accessData.access_token == null) {
+            System.out.println("(exchangeCredentialsForToken) Failed to return access data and/or access token.");
+            return null;
+        }
+
+        return accessData.access_token;
     }
 
     public String exchangeCodeForToken(String code) {
@@ -129,7 +194,7 @@ public class SpotifyService {
             return null;
         }
 
-        SpotifyData.AccessData accessData = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.AccessData.class);
+        SpotifyData.UserAccessData accessData = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.UserAccessData.class);
 
         if (accessData == null || accessData.access_token == null) {
             System.out.println("(exchangeCodeForToken) Failed to return access data and/or access token.");
