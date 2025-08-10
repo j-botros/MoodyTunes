@@ -43,14 +43,13 @@ public class SpotifyService {
     @Value("${SPOTIFY_CLIENT_SECRET}")
     private String clientSecret;
 
-    public void handlePlaylistRedirect(String userAccessToken, String location, String playlistName, String playlistDesc) {
-        final String clientAccessToken = exchangeCredentialsForToken();
-        final String userId = getUserId(userAccessToken);
-        getTop5Items(userAccessToken);
-        testAuth(clientAccessToken);
-        final String[] recTracks = recommendTracks(clientAccessToken, location);
-        final String playlistId = createEmptyPlaylist(userAccessToken, userId, playlistName, playlistDesc);
-        addToPlaylist(userAccessToken, recTracks, playlistId);
+    public void handlePlaylistRedirect(String accessToken, String location, String playlistName, String playlistDesc) {
+        final String userId = getUserId(accessToken);
+        getTop5Items(accessToken);
+        testAuth(accessToken);
+        final String[] recTracks = recommendTracks(accessToken, location);
+        final String playlistId = createEmptyPlaylist(accessToken, userId, playlistName, playlistDesc);
+        addToPlaylist(accessToken, recTracks, playlistId);
     }
 
     private void testAuth(String accessToken) {
@@ -73,6 +72,7 @@ public class SpotifyService {
         }
     }
 
+    /*
     public String exchangeCredentialsForToken() {
         final String grantType = "client_credentials";
         final String urlString = "https://accounts.spotify.com/api/token";
@@ -136,6 +136,7 @@ public class SpotifyService {
 
         return accessData.access_token;
     }
+    */
 
     public String exchangeCodeForToken(String code) {
         final String grantType = "authorization_code";
@@ -350,7 +351,7 @@ public class SpotifyService {
         System.out.println("Genre: " + genre);
         final String urlString = "https://api.spotify.com/v1/recommendations"
             //+ "?market=" + market
-            + "?seed_genres=pop" //+ genre
+            + "?seed_genres=[pop]" //+ genre
             /*+ "&target_danceability=" + danceability
             + "&target_energy=" + energy
             + "&target_loudness=" + loudness
