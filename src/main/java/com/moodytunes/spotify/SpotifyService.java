@@ -45,8 +45,7 @@ public class SpotifyService {
 
     public void handlePlaylistRedirect(String accessToken, String location, String playlistName, String playlistDesc) {
         final String userId = getUserId(accessToken);
-        final String top5 = getTop5Items(accessToken);
-        final String[] recTracks = recommendTracks(accessToken, top5, location);
+        final String[] recTracks = recommendTracks(accessToken, location);
         final String playlistId = createEmptyPlaylist(accessToken, userId, playlistName, playlistDesc);
         addToPlaylist(accessToken, recTracks, playlistId);
     }
@@ -171,6 +170,7 @@ public class SpotifyService {
         return userData.id;
     }
 
+    /*
     private String getTop5Items(String accessToken) {
         final int limit = 5;
         final String urlString = "https://api.spotify.com/v1/me/top/tracks"
@@ -237,84 +237,40 @@ public class SpotifyService {
 
         return result;
     }
+    */
 
-    private String[] recommendTracks(String accessToken, String tracks, String location) {
+    private String[] recommendTracks(String accessToken, String location) {
         final Recommendation recommendation = new Recommendation();
         analyzeWeather.recommend(recommendation, location);
 
         System.out.println("=== DEBUG INFO ===");
         System.out.println("Access token: " + (accessToken != null ? "Present" : "NULL"));
-        System.out.println("Seed tracks: " + tracks);
         System.out.println("Location: " + location);
-
-        final int limit = 20;
+        
         final String market = "US";
-        final double minAcousticness = recommendation.getAcousticness().get("min");
-        System.out.println("minAcc: " + minAcousticness);
-        final double maxAcousticness = recommendation.getAcousticness().get("max");
-        System.out.println("maxAcc: " + maxAcousticness);
-        final double minDanceability = recommendation.getDanceability().get("min");
-        System.out.println("minDan: " + minDanceability);
-        final double maxDanceability = recommendation.getDanceability().get("max");
-        System.out.println("maxDan: " + maxDanceability);
-        final double minEnergy = recommendation.getEnergy().get("min");
-        System.out.println("minEn: " + minEnergy);
-        final double maxEnergy = recommendation.getEnergy().get("max");
-        System.out.println("maxEn: " + maxEnergy);
-        final double minInstrumentalness = recommendation.getInstrumentalness().get("min");
-        System.out.println("minIns: " + minInstrumentalness);
-        final double maxInstrumentalness = recommendation.getInstrumentalness().get("max");
-        System.out.println("maxIns: " + maxInstrumentalness);
-        final double minLiveness = recommendation.getLiveness().get("min");
-        System.out.println("minLiv: " + minLiveness);
-        final double maxLiveness = recommendation.getLiveness().get("max");
-        System.out.println("maxLiv: " + maxLiveness);
-        final double minLoudness = recommendation.getLoudness().get("min");
-        System.out.println("minLou: " + minLoudness);
-        final double maxLoudness = recommendation.getLoudness().get("max");
-        System.out.println("maxLou: " + maxLoudness);
-        final int minMode = recommendation.getMode().get("min");
-        System.out.println("minMod: " + minMode);
-        final int maxMode = recommendation.getMode().get("max");
-        System.out.println("maxMod: " + maxMode);
-        final double minSpeechiness = recommendation.getSpeechiness().get("min");
-        System.out.println("minSpe: " + minSpeechiness);
-        final double maxSpeechiness = recommendation.getSpeechiness().get("max");
-        System.out.println("maxSpe: " + maxSpeechiness);
-        final double minTempo = recommendation.getTempo().get("min");
-        System.out.println("minTem: " + minTempo);
-        final double maxTempo = recommendation.getTempo().get("max");
-        System.out.println("maxTem: " + maxTempo);
-        final double minValence = recommendation.getValence().get("min");
-        System.out.println("minVal: " + minValence);
-        final double maxValence = recommendation.getValence().get("max");
-        System.out.println("maxVal: " + maxValence);
-        final int targetPopularity = 70;
+        final double danceability = recommendation.getDanceability();
+        System.out.println("Danceability: " + danceability);
+        final double energy = recommendation.getEnergy();
+        System.out.println("Energy: " + energy);
+        final double loudness = recommendation.getLoudness();
+        System.out.println("Loudness: " + loudness);
+        final double speechiness = recommendation.getSpeechiness();
+        System.out.println("Speechiness: " + speechiness);
+        final double tempo = recommendation.getTempo();
+        System.out.println("Tempo: " + tempo);
+        final double valence = recommendation.getValence();
+        System.out.println("Valence: " + valence);
+        final String genre = recommendation.getGenre();
+        System.out.println("Genre: " + genre);
         final String urlString = "https://api.spotify.com/v1/recommendations"
-            + "?limit=" + limit
             + "&market=" + market
-            + "&seed_tracks=" + tracks
-            + "&min_acousticness=" + minAcousticness
-            + "&max_acousticness=" + maxAcousticness
-            + "&min_danceability=" + minDanceability
-            + "&max_danceability=" + maxDanceability
-            + "&min_energy=" + minEnergy
-            + "&max_energy=" + maxEnergy
-            + "&min_instrumentalness=" + minInstrumentalness
-            + "&max_instrumentalness=" + maxInstrumentalness
-            + "&min_liveness=" + minLiveness
-            + "&max_liveness=" + maxLiveness
-            + "&min_loudness=" + minLoudness
-            + "&max_loudness=" + maxLoudness
-            + "&min_mode=" + minMode
-            + "&max_mode=" + maxMode
-            + "&target_popularity=" + targetPopularity
-            + "&min_speechiness=" + minSpeechiness
-            + "&max_speechiness=" + maxSpeechiness
-            + "&min_tempo=" + minTempo
-            + "&max_tempo=" + maxTempo
-            + "&min_valence=" + minValence
-            + "&max_valence=" + maxValence
+            + "&seed_genres" + genre
+            + "&target_danceability=" + danceability
+            + "&target_energy=" + energy
+            + "&target_loudness=" + loudness
+            + "&target_speechiness=" + speechiness
+            + "&target_tempo=" + tempo
+            + "&target_valence=" + valence
         ;
 
         HttpRequest request;
@@ -366,8 +322,8 @@ public class SpotifyService {
 
         SpotifyData.RecommendedSongs recommendedSongs = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.RecommendedSongs.class);
 
-        String[] trackUris = new String[limit];
-        for (int i = 0; i < limit; i++) {
+        String[] trackUris = new String[recommendedSongs.tracks.length];
+        for (int i = 0; i < recommendedSongs.tracks.length; i++) {
             trackUris[i] = recommendedSongs.tracks[i].uri;
         }
 

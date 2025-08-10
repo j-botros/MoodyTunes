@@ -27,63 +27,27 @@ public class AnalyzeWeather {
             case WeatherCodes.THUNDERSTORM_LIGHT_DRIZZLE:
 
             case WeatherCodes.THUNDERSTORM_RAIN_LIGHT:
-                recommendation.setAcousticness(Recommendation.range(0.5, 0.8));
-                recommendation.setDanceability(Recommendation.range(0.3, 0.5));
-                recommendation.setEnergy(Recommendation.range(0.3, 0.5));
-                recommendation.setInstrumentalness(Recommendation.range(0.3, 0.6));
-                recommendation.setLiveness(Recommendation.range(0.2, 0.4));
-                recommendation.setLoudness(Recommendation.range(-15.0, -8.0));
-                recommendation.setMode(Recommendation.range(0, 1));
-                recommendation.setSpeechiness(Recommendation.range(0.1, 0.3));
-                recommendation.setTempo(Recommendation.range(80.0, 110.0));
-                recommendation.setValence(Recommendation.range(0.25, 0.45));
-                break;
             
             case WeatherCodes.THUNDERSTORM:
 
             case WeatherCodes.THUNDERSTORM_DRIZZLE:
 
             case WeatherCodes.THUNDERSTORM_RAIN:
-                recommendation.setAcousticness(Recommendation.range(0.3, 0.6));
-                recommendation.setDanceability(Recommendation.range(0.3, 0.5));
-                recommendation.setEnergy(Recommendation.range(0.4, 0.6));
-                recommendation.setInstrumentalness(Recommendation.range(0.2, 0.5));
-                recommendation.setLiveness(Recommendation.range(0.3, 0.6));
-                recommendation.setLoudness(Recommendation.range(-10.0, -2.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.1, 0.4));
-                recommendation.setTempo(Recommendation.range(90.0, 120.0));
-                recommendation.setValence(Recommendation.range(0.1, 0.3));
-                break;
 
             case WeatherCodes.THUNDERSTORM_HEAVY:
 
             case WeatherCodes.THUNDERSTORM_HEAVY_DRIZZLE:
 
             case WeatherCodes.THUNDERSTORM_RAIN_HEAVY:
-                recommendation.setAcousticness(Recommendation.range(0.1, 0.3));
-                recommendation.setDanceability(Recommendation.range(0.2, 0.4));
-                recommendation.setEnergy(Recommendation.range(0.7, 0.9));
-                recommendation.setInstrumentalness(Recommendation.range(0.1, 0.4));
-                recommendation.setLiveness(Recommendation.range(0.5, 0.9));
-                recommendation.setLoudness(Recommendation.range(-6.0, 0.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.2, 0.5));
-                recommendation.setTempo(Recommendation.range(110.0, 140.0));
-                recommendation.setValence(Recommendation.range(0.05, 0.20));
-                break;
 
             case WeatherCodes.THUNDERSTORM_RAGGED:
-                recommendation.setAcousticness(Recommendation.range(0.0, 0.2));
-                recommendation.setDanceability(Recommendation.range(0.1, 0.4));
-                recommendation.setEnergy(Recommendation.range(0.7, 1.0));
-                recommendation.setInstrumentalness(Recommendation.range(0.0, 0.3));
-                recommendation.setLiveness(Recommendation.range(0.7, 1.0));
-                recommendation.setLoudness(Recommendation.range(-6.0, 0.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.3, 0.7));
-                recommendation.setTempo(Recommendation.range(130.0, 160.0));
-                recommendation.setValence(Recommendation.range(0.05, 0.20));
+                recommendation.setDanceability(0.4);
+                recommendation.setEnergy(0.4);
+                recommendation.setLoudness(-10.0);
+                recommendation.setSpeechiness(0.4);
+                recommendation.setTempo(110.0);
+                recommendation.setValence(0.2);
+                recommendation.setGenre(Recommendation.SEED_GENRES.get("thunder"));
                 break;
 
             // Drizzle
@@ -92,148 +56,54 @@ public class AnalyzeWeather {
             case WeatherCodes.DRIZZLE_SHOWER_LIGHT:
 
             case WeatherCodes.DRIZZLE_RAIN_LIGHT:
-                recommendation.setAcousticness(Recommendation.range(0.5, 0.8));
-                recommendation.setDanceability(Recommendation.range(0.4, 0.6));
-                recommendation.setEnergy(Recommendation.range(0.2, 0.4));
-                recommendation.setInstrumentalness(Recommendation.range(0.3, 0.6));
-                recommendation.setLiveness(Recommendation.range(0.2, 0.4));
-                recommendation.setLoudness(Recommendation.range(-60.0, 0.0));
-                recommendation.setMode(Recommendation.range(0, 1));
-                recommendation.setSpeechiness(Recommendation.range(0.1, 0.2));
-                recommendation.setTempo(Recommendation.range(70.0, 90.0));
-                recommendation.setValence(Recommendation.range(0.3, 0.5));
-                break;
                 
             case WeatherCodes.DRIZZLE:
 
             case WeatherCodes.DRIZZLE_RAIN:
-                recommendation.setAcousticness(Recommendation.range(0.4, 0.7));
-                recommendation.setDanceability(Recommendation.range(0.3, 0.5));
-                recommendation.setEnergy(Recommendation.range(0.3, 0.5));
-                recommendation.setInstrumentalness(Recommendation.range(0.3, 0.5));
-                recommendation.setLiveness(Recommendation.range(0.3, 0.5));
-                recommendation.setLoudness(Recommendation.range(-60.0, 0.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.1, 0.3));
-                recommendation.setTempo(Recommendation.range(80.0, 100.0));
-                recommendation.setValence(Recommendation.range(0.25, 0.45));
-                break;
 
             case WeatherCodes.DRIZZLE_HEAVY:
 
             case WeatherCodes.DRIZZLE_SHOWER_HEAVY:
 
             case WeatherCodes.DRIZZLE_RAIN_HEAVY:
-                recommendation.setAcousticness(Recommendation.range(0.2, 0.5));
-                recommendation.setDanceability(Recommendation.range(0.2, 0.4));
-                recommendation.setEnergy(Recommendation.range(0.4, 0.6));
-                recommendation.setInstrumentalness(Recommendation.range(0.2, 0.5));
-                recommendation.setLiveness(Recommendation.range(0.3, 0.6));
-                recommendation.setLoudness(Recommendation.range(-50.0, -10.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.2, 0.4));
-                recommendation.setTempo(Recommendation.range(85.0, 110.0));
-                recommendation.setValence(Recommendation.range(0.2, 0.3));
-                break;
 
             case WeatherCodes.DRIZZLE_SHOWER_RAGGED:
-                recommendation.setAcousticness(Recommendation.range(0.2, 0.4));
-                recommendation.setDanceability(Recommendation.range(0.2, 0.4));
-                recommendation.setEnergy(Recommendation.range(0.5, 0.7));
-                recommendation.setInstrumentalness(Recommendation.range(0.2, 0.4));
-                recommendation.setLiveness(Recommendation.range(0.4, 0.7));
-                recommendation.setLoudness(Recommendation.range(-50.0, -10.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.2, 0.4));
-                recommendation.setTempo(Recommendation.range(90.0, 120.0));
-                recommendation.setValence(Recommendation.range(0.2, 0.3));
+                recommendation.setDanceability(0.3);
+                recommendation.setEnergy(0.4);
+                recommendation.setLoudness(-30.0);
+                recommendation.setSpeechiness(0.3);
+                recommendation.setTempo(80.0);
+                recommendation.setValence(0.35);
+                recommendation.setGenre(Recommendation.SEED_GENRES.get("drizzle"));
                 break;
 
             // Rain
             case WeatherCodes.RAIN_SHOWER_LIGHT:
             
             case WeatherCodes.RAIN_LIGHT:
-                recommendation.setAcousticness(Recommendation.range(0.5, 0.8));
-                recommendation.setDanceability(Recommendation.range(0.4, 0.6));
-                recommendation.setEnergy(Recommendation.range(0.3, 0.5));
-                recommendation.setInstrumentalness(Recommendation.range(0.3, 0.6));
-                recommendation.setLiveness(Recommendation.range(0.2, 0.4));
-                recommendation.setLoudness(Recommendation.range(-50.0, -10.0));
-                recommendation.setMode(Recommendation.range(0, 1));
-                recommendation.setSpeechiness(Recommendation.range(0.1, 0.3));
-                recommendation.setTempo(Recommendation.range(70.0, 90.0));
-                recommendation.setValence(Recommendation.range(0.2, 0.3));
-                break;
                 
             case WeatherCodes.RAIN_SHOWER:
 
             case WeatherCodes.RAIN:
-                recommendation.setAcousticness(Recommendation.range(0.3, 0.6));
-                recommendation.setDanceability(Recommendation.range(0.3, 0.5));
-                recommendation.setEnergy(Recommendation.range(0.4, 0.6));
-                recommendation.setInstrumentalness(Recommendation.range(0.3, 0.5));
-                recommendation.setLiveness(Recommendation.range(0.3, 0.5));
-                recommendation.setLoudness(Recommendation.range(-40.0, -10.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.2, 0.4));
-                recommendation.setTempo(Recommendation.range(80.0, 100.0));
-                recommendation.setValence(Recommendation.range(0.15, 0.3));
-                break;
             
             case WeatherCodes.RAIN_SHOWER_HEAVY:
 
             case WeatherCodes.RAIN_HEAVY:
-                recommendation.setAcousticness(Recommendation.range(0.2, 0.5));
-                recommendation.setDanceability(Recommendation.range(0.2, 0.4));
-                recommendation.setEnergy(Recommendation.range(0.6, 0.8));
-                recommendation.setInstrumentalness(Recommendation.range(0.2, 0.4));
-                recommendation.setLiveness(Recommendation.range(0.4, 0.6));
-                recommendation.setLoudness(Recommendation.range(-30.0, -5.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.2, 0.4));
-                recommendation.setTempo(Recommendation.range(90.0, 110.0));
-                recommendation.setValence(Recommendation.range(0.1, 0.25));
-                break;
 
             case WeatherCodes.RAIN_VERY_HEAVY:
-                recommendation.setAcousticness(Recommendation.range(0.1, 0.3));
-                recommendation.setDanceability(Recommendation.range(0.2, 0.4));
-                recommendation.setEnergy(Recommendation.range(0.7, 0.9));
-                recommendation.setInstrumentalness(Recommendation.range(0.2, 0.4));
-                recommendation.setLiveness(Recommendation.range(0.5, 0.7));
-                recommendation.setLoudness(Recommendation.range(-25.0, -5.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.3, 0.5));
-                recommendation.setTempo(Recommendation.range(95.0, 120.0));
-                recommendation.setValence(Recommendation.range(0.05, 0.2));
-                break;
 
             case WeatherCodes.RAIN_SHOWER_RAGGED:
 
             case WeatherCodes.RAIN_EXTREME:
-                recommendation.setAcousticness(Recommendation.range(0.0, 0.2));
-                recommendation.setDanceability(Recommendation.range(0.1, 0.3));
-                recommendation.setEnergy(Recommendation.range(0.8, 1.0));
-                recommendation.setInstrumentalness(Recommendation.range(0.0, 0.3));
-                recommendation.setLiveness(Recommendation.range(0.6, 1.0));
-                recommendation.setLoudness(Recommendation.range(-20.0, -5.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.3, 0.6));
-                recommendation.setTempo(Recommendation.range(100.0, 130.0));
-                recommendation.setValence(Recommendation.range(0.05, 0.2));
-                break;
 
             case WeatherCodes.RAIN_FREEZING:
-                recommendation.setAcousticness(Recommendation.range(0.6, 0.9));
-                recommendation.setDanceability(Recommendation.range(0.2, 0.4));
-                recommendation.setEnergy(Recommendation.range(0.2, 0.4));
-                recommendation.setInstrumentalness(Recommendation.range(0.4, 0.7));
-                recommendation.setLiveness(Recommendation.range(0.2, 0.4));
-                recommendation.setLoudness(Recommendation.range(-40.0, -10.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.1, 0.2));
-                recommendation.setTempo(Recommendation.range(60.0, 80.0));
-                recommendation.setValence(Recommendation.range(0.1, 0.25));
+                recommendation.setDanceability(0.4);
+                recommendation.setEnergy(0.4);
+                recommendation.setLoudness(-25.0);
+                recommendation.setSpeechiness(0.3);
+                recommendation.setTempo(80.0);
+                recommendation.setValence(0.20);
+                recommendation.setGenre(Recommendation.SEED_GENRES.get("rain"));
                 break;
 
             // Snow
@@ -244,17 +114,6 @@ public class AnalyzeWeather {
             case WeatherCodes.SNOW_RAIN_LIGHT:
 
             case WeatherCodes.SNOW_LIGHT:
-                recommendation.setAcousticness(Recommendation.range(0.7, 1.0));
-                recommendation.setDanceability(Recommendation.range(0.3, 0.5));
-                recommendation.setEnergy(Recommendation.range(0.2, 0.4));
-                recommendation.setInstrumentalness(Recommendation.range(0.5, 0.8));
-                recommendation.setLiveness(Recommendation.range(0.1, 0.3));
-                recommendation.setLoudness(Recommendation.range(-60.0, -20.0));
-                recommendation.setMode(Recommendation.range(1, 1));
-                recommendation.setSpeechiness(Recommendation.range(0.1, 0.3));
-                recommendation.setTempo(Recommendation.range(60.0, 90.0));
-                recommendation.setValence(Recommendation.range(0.5, 0.7));
-                break;
 
             case WeatherCodes.SNOW_SHOWER:
 
@@ -265,162 +124,78 @@ public class AnalyzeWeather {
             case WeatherCodes.SNOW_RAIN:
 
             case WeatherCodes.SNOW:
-                recommendation.setAcousticness(Recommendation.range(0.5, 0.8));
-                recommendation.setDanceability(Recommendation.range(0.3, 0.5));
-                recommendation.setEnergy(Recommendation.range(0.3, 0.5));
-                recommendation.setInstrumentalness(Recommendation.range(0.4, 0.7));
-                recommendation.setLiveness(Recommendation.range(0.2, 0.4));
-                recommendation.setLoudness(Recommendation.range(-60.0, -15.0));
-                recommendation.setMode(Recommendation.range(0, 1));
-                recommendation.setSpeechiness(Recommendation.range(0.2, 0.3));
-                recommendation.setTempo(Recommendation.range(70.0, 100.0));
-                recommendation.setValence(Recommendation.range(0.5, 0.7));
-                break;
 
             case WeatherCodes.SNOW_SHOWER_HEAVY:
 
             case WeatherCodes.SNOW_HEAVY:
-                recommendation.setAcousticness(Recommendation.range(0.3, 0.6));
-                recommendation.setDanceability(Recommendation.range(0.2, 0.4));
-                recommendation.setEnergy(Recommendation.range(0.4, 0.6));
-                recommendation.setInstrumentalness(Recommendation.range(0.3, 0.6));
-                recommendation.setLiveness(Recommendation.range(0.3, 0.6));
-                recommendation.setLoudness(Recommendation.range(-50.0, -15.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.2, 0.4));
-                recommendation.setTempo(Recommendation.range(80.0, 110.0));
-                recommendation.setValence(Recommendation.range(0.4, 0.6));
+                recommendation.setDanceability(0.3);
+                recommendation.setEnergy(0.3);
+                recommendation.setLoudness(-45.0);
+                recommendation.setSpeechiness(0.3);
+                recommendation.setTempo(80.0);
+                recommendation.setValence(0.7);
+                recommendation.setGenre(Recommendation.SEED_GENRES.get("snow"));
                 break;
 
             // Atmosphere
             case WeatherCodes.MIST:
-                recommendation.setAcousticness(Recommendation.range(0.6, 0.9));
-                recommendation.setDanceability(Recommendation.range(0.3, 0.5));
-                recommendation.setEnergy(Recommendation.range(0.2, 0.4));
-                recommendation.setInstrumentalness(Recommendation.range(0.4, 0.7));
-                recommendation.setLiveness(Recommendation.range(0.1, 0.3));
-                recommendation.setLoudness(Recommendation.range(-60.0, -15.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.1, 0.2));
-                recommendation.setTempo(Recommendation.range(60.0, 85.0));
-                recommendation.setValence(Recommendation.range(0.3, 0.5));
-                break;
 
             case WeatherCodes.SMOKE:
-                recommendation.setAcousticness(Recommendation.range(0.2, 0.5));
-                recommendation.setDanceability(Recommendation.range(0.3, 0.5));
-                recommendation.setEnergy(Recommendation.range(0.4, 0.6));
-                recommendation.setInstrumentalness(Recommendation.range(0.3, 0.6));
-                recommendation.setLiveness(Recommendation.range(0.2, 0.4));
-                recommendation.setLoudness(Recommendation.range(-60.0, -15.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.2, 0.4));
-                recommendation.setTempo(Recommendation.range(70.0, 95.0));
-                recommendation.setValence(Recommendation.range(0.3, 0.5));
-                break;
 
             case WeatherCodes.HAZE:
-                recommendation.setAcousticness(Recommendation.range(0.4, 0.7));
-                recommendation.setDanceability(Recommendation.range(0.4, 0.6));
-                recommendation.setEnergy(Recommendation.range(0.3, 0.5));
-                recommendation.setInstrumentalness(Recommendation.range(0.3, 0.6));
-                recommendation.setLiveness(Recommendation.range(0.2, 0.4));
-                recommendation.setLoudness(Recommendation.range(-60.0, -15.0));
-                recommendation.setMode(Recommendation.range(0, 1));
-                recommendation.setSpeechiness(Recommendation.range(0.1, 0.3));
-                recommendation.setTempo(Recommendation.range(70.0, 95.0));
-                recommendation.setValence(Recommendation.range(0.3, 0.5));
-                break;
-
-            case WeatherCodes.SAND_WHIRLS:
-                recommendation.setAcousticness(Recommendation.range(0.1, 0.3));
-                recommendation.setDanceability(Recommendation.range(0.3, 0.5));
-                recommendation.setEnergy(Recommendation.range(0.6, 0.9));
-                recommendation.setInstrumentalness(Recommendation.range(0.2, 0.5));
-                recommendation.setLiveness(Recommendation.range(0.4, 0.7));
-                recommendation.setLoudness(Recommendation.range(-30.0, -10.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.2, 0.4));
-                recommendation.setTempo(Recommendation.range(100.0, 130.0));
-                recommendation.setValence(Recommendation.range(0.2, 0.4));
-                break;
 
             case WeatherCodes.FOG:
-                recommendation.setAcousticness(Recommendation.range(0.6, 0.9));
-                recommendation.setDanceability(Recommendation.range(0.2, 0.4));
-                recommendation.setEnergy(Recommendation.range(0.1, 0.3));
-                recommendation.setInstrumentalness(Recommendation.range(0.5, 0.9));
-                recommendation.setLiveness(Recommendation.range(0.1, 0.3));
-                recommendation.setLoudness(Recommendation.range(-60.0, -10.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.0, 0.2));
-                recommendation.setTempo(Recommendation.range(50.0, 75.0));
-                recommendation.setValence(Recommendation.range(0.3, 0.5));
-                break;
-
-            case WeatherCodes.SAND:
-                recommendation.setAcousticness(Recommendation.range(0.2, 0.5));
-                recommendation.setDanceability(Recommendation.range(0.3, 0.5));
-                recommendation.setEnergy(Recommendation.range(0.4, 0.6));
-                recommendation.setInstrumentalness(Recommendation.range(0.4, 0.7));
-                recommendation.setLiveness(Recommendation.range(0.3, 0.5));
-                recommendation.setLoudness(Recommendation.range(-40.0, -5.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.1, 0.3));
-                recommendation.setTempo(Recommendation.range(75.0, 100.0));
-                recommendation.setValence(Recommendation.range(0.3, 0.5));
+                recommendation.setDanceability(0.4);
+                recommendation.setEnergy(0.2);
+                recommendation.setLoudness(-40.0);
+                recommendation.setSpeechiness(0.1);
+                recommendation.setTempo(60.0);
+                recommendation.setValence(0.4);
+                recommendation.setGenre(Recommendation.SEED_GENRES.get("foggy"));
                 break;
 
             case WeatherCodes.DUST:
-                recommendation.setAcousticness(Recommendation.range(0.3, 0.6));
-                recommendation.setDanceability(Recommendation.range(0.2, 0.4));
-                recommendation.setEnergy(Recommendation.range(0.3, 0.5));
-                recommendation.setInstrumentalness(Recommendation.range(0.4, 0.7));
-                recommendation.setLiveness(Recommendation.range(0.2, 0.4));
-                recommendation.setLoudness(Recommendation.range(-40.0, -5.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.2, 0.4));
-                recommendation.setTempo(Recommendation.range(60.0, 85.0));
-                recommendation.setValence(Recommendation.range(0.4, 0.6));
+
+            case WeatherCodes.SAND_WHIRLS:
+
+            case WeatherCodes.SAND:
+                recommendation.setDanceability(0.3);
+                recommendation.setEnergy(0.5);
+                recommendation.setLoudness(-30.0);
+                recommendation.setSpeechiness(0.2);
+                recommendation.setTempo(100.0);
+                recommendation.setValence(0.4);
+                recommendation.setGenre(Recommendation.SEED_GENRES.get("sandy"));
                 break;
 
             case WeatherCodes.VOLCANIC_ASH:
-                recommendation.setAcousticness(Recommendation.range(0.0, 0.2));
-                recommendation.setDanceability(Recommendation.range(0.1, 0.3));
-                recommendation.setEnergy(Recommendation.range(0.6, 1.0));
-                recommendation.setInstrumentalness(Recommendation.range(0.3, 0.7));
-                recommendation.setLiveness(Recommendation.range(0.5, 0.8));
-                recommendation.setLoudness(Recommendation.range(-40.0, -5.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.3, 0.6));
-                recommendation.setTempo(Recommendation.range(100.0, 140.0));
-                recommendation.setValence(Recommendation.range(0.2, 0.4));
+                recommendation.setDanceability(0.2);
+                recommendation.setEnergy(0.8);
+                recommendation.setLoudness(-30.0);
+                recommendation.setSpeechiness(0.5);
+                recommendation.setTempo(120.0);
+                recommendation.setValence(0.3);
+                recommendation.setGenre(Recommendation.SEED_GENRES.get("volcanic-ash"));
                 break;
 
             case WeatherCodes.SQUALLS:
-                recommendation.setAcousticness(Recommendation.range(0.1, 0.3));
-                recommendation.setDanceability(Recommendation.range(0.3, 0.5));
-                recommendation.setEnergy(Recommendation.range(0.7, 1.0));
-                recommendation.setInstrumentalness(Recommendation.range(0.2, 0.5));
-                recommendation.setLiveness(Recommendation.range(0.5, 0.8));
-                recommendation.setLoudness(Recommendation.range(-40.0, -5.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.2, 0.5));
-                recommendation.setTempo(Recommendation.range(110.0, 150.0));
-                recommendation.setValence(Recommendation.range(0.3, 0.6));
+                recommendation.setDanceability(0.4);
+                recommendation.setEnergy(0.8);
+                recommendation.setLoudness(-30.0);
+                recommendation.setSpeechiness(0.3);
+                recommendation.setTempo(140.0);
+                recommendation.setValence(0.4);
+                recommendation.setGenre(Recommendation.SEED_GENRES.get("squalls"));
                 break;
 
             case WeatherCodes.TORNADO:
-                recommendation.setAcousticness(Recommendation.range(0.0, 0.2));
-                recommendation.setDanceability(Recommendation.range(0.2, 0.4));
-                recommendation.setEnergy(Recommendation.range(0.9, 1.0));
-                recommendation.setInstrumentalness(Recommendation.range(0.2, 0.6));
-                recommendation.setLiveness(Recommendation.range(0.7, 1.0));
-                recommendation.setLoudness(Recommendation.range(-10.0, 0.0));
-                recommendation.setMode(Recommendation.range(0, 0));
-                recommendation.setSpeechiness(Recommendation.range(0.4, 0.6));
-                recommendation.setTempo(Recommendation.range(120.0, 160.0));
-                recommendation.setValence(Recommendation.range(0.0, 0.2));
+                recommendation.setDanceability(0.4);
+                recommendation.setEnergy(1.0);
+                recommendation.setLoudness(-10.0);
+                recommendation.setSpeechiness(0.6);
+                recommendation.setTempo(160.0);
+                recommendation.setValence(0.1);
+                recommendation.setGenre(Recommendation.SEED_GENRES.get("tornado"));
                 break;
 
             // Clear
@@ -435,53 +210,40 @@ public class AnalyzeWeather {
                 final double TEMPERATURE = weatherData.main.temp;
                 
                 if (TEMPERATURE >= 303.15) {
-                    recommendation.setAcousticness(Recommendation.range(0.0, 0.2));
-                    recommendation.setDanceability(Recommendation.range(0.7, 1.0));
-                    recommendation.setEnergy(Recommendation.range(0.8, 1.0));
-                    recommendation.setInstrumentalness(Recommendation.range(0.0, 0.4));
-                    recommendation.setLiveness(Recommendation.range(0.0, 0.7));
-                    recommendation.setLoudness(Recommendation.range(-60.0, 0.0));
-                    recommendation.setMode(Recommendation.range(0, 1));
-                    recommendation.setSpeechiness(Recommendation.range(0.2, 0.7));
-                    recommendation.setTempo(Recommendation.range(90.0, 180.0));
-                    recommendation.setValence(Recommendation.range(0.7, 1.0));
+                    recommendation.setDanceability(1.0);
+                    recommendation.setEnergy(0.9);
+                    recommendation.setLoudness(-60.0);
+                    recommendation.setSpeechiness(0.6);
+                    recommendation.setTempo(120.0);
+                    recommendation.setValence(1.0);
+                    recommendation.setGenre(Recommendation.SEED_GENRES.get("hot"));
                 }
                 else if (TEMPERATURE >= 293.15) {
-                    recommendation.setAcousticness(Recommendation.range(0.1, 0.4));
-                    recommendation.setDanceability(Recommendation.range(0.6, 0.9));
-                    recommendation.setEnergy(Recommendation.range(0.6, 0.9));
-                    recommendation.setInstrumentalness(Recommendation.range(0.0, 0.4));
-                    recommendation.setLiveness(Recommendation.range(0.0, 0.7));
-                    recommendation.setLoudness(Recommendation.range(-60.0, 0.0));
-                    recommendation.setMode(Recommendation.range(1, 1));
-                    recommendation.setSpeechiness(Recommendation.range(0.2, 0.7));
-                    recommendation.setTempo(Recommendation.range(80.0, 150.0));
-                    recommendation.setValence(Recommendation.range(0.4, 0.7));
+                    recommendation.setDanceability(0.7);
+                    recommendation.setEnergy(0.7);
+                    recommendation.setLoudness(-60.0);
+                    recommendation.setSpeechiness(0.6);
+                    recommendation.setTempo(90.0);
+                    recommendation.setValence(0.7);
+                    recommendation.setGenre(Recommendation.SEED_GENRES.get("warm"));
                 }
                 else if (TEMPERATURE >= 285.15) {
-                    recommendation.setAcousticness(Recommendation.range(0.4, 0.8));
-                    recommendation.setDanceability(Recommendation.range(0.4, 0.6));
-                    recommendation.setEnergy(Recommendation.range(0.3, 0.6));
-                    recommendation.setInstrumentalness(Recommendation.range(0.3, 0.7));
-                    recommendation.setLiveness(Recommendation.range(0.0, 0.4));
-                    recommendation.setLoudness(Recommendation.range(-60.0, 0.0));
-                    recommendation.setMode(Recommendation.range(1, 1));
-                    recommendation.setSpeechiness(Recommendation.range(0.0, 0.3));
-                    recommendation.setTempo(Recommendation.range(70.0, 120.0));
-                    recommendation.setValence(Recommendation.range(0.4, 0.6));
-                    recommendation.setValence(Recommendation.range(0.4, 0.7));
+                    recommendation.setDanceability(0.5);
+                    recommendation.setEnergy(0.6);
+                    recommendation.setLoudness(-60.0);
+                    recommendation.setSpeechiness(0.5);
+                    recommendation.setTempo(75.0);
+                    recommendation.setValence(0.6);
+                    recommendation.setGenre(Recommendation.SEED_GENRES.get("mild"));
                 }
                 else {
-                    recommendation.setAcousticness(Recommendation.range(0.7, 1.0));
-                    recommendation.setDanceability(Recommendation.range(0.2, 0.4));
-                    recommendation.setEnergy(Recommendation.range(0.1, 0.4));
-                    recommendation.setInstrumentalness(Recommendation.range(0.5, 1.0));
-                    recommendation.setLiveness(Recommendation.range(0.0, 0.2));
-                    recommendation.setLoudness(Recommendation.range(-60.0, 0.0));
-                    recommendation.setMode(Recommendation.range(0, 0));
-                    recommendation.setSpeechiness(Recommendation.range(0.0, 0.3));
-                    recommendation.setTempo(Recommendation.range(60.0, 90.0));
-                    recommendation.setValence(Recommendation.range(0.4, 0.7));
+                    recommendation.setDanceability(045);
+                    recommendation.setEnergy(0.5);
+                    recommendation.setLoudness(-45.0);
+                    recommendation.setSpeechiness(0.4);
+                    recommendation.setTempo(60.0);
+                    recommendation.setValence(0.4);
+                    recommendation.setGenre(Recommendation.SEED_GENRES.get("cold"));
                 }
         }
     }
