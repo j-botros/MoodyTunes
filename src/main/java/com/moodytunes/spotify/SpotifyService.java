@@ -2,11 +2,9 @@ package com.moodytunes.spotify;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URLEncoder;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
@@ -286,7 +284,7 @@ public class SpotifyService {
         final String urlString = "https://api.spotify.com/v1/recommendations"
             + "?limit=" + limit
             + "&market=" + market
-            + "&seed_tracks=" + URLEncoder.encode(tracks, StandardCharsets.UTF_8)
+            + "&seed_tracks=" + tracks
             + "&min_acousticness=" + minAcousticness
             + "&max_acousticness=" + maxAcousticness
             + "&min_danceability=" + minDanceability
@@ -301,13 +299,13 @@ public class SpotifyService {
             + "&max_loudness=" + maxLoudness
             + "&min_mode=" + minMode
             + "&max_mode=" + maxMode
+            + "&target_popularity=" + targetPopularity
             + "&min_speechiness=" + minSpeechiness
             + "&max_speechiness=" + maxSpeechiness
             + "&min_tempo=" + minTempo
             + "&max_tempo=" + maxTempo
             + "&min_valence=" + minValence
             + "&max_valence=" + maxValence
-            + "&target_popularity=" + targetPopularity
         ;
 
         HttpRequest request;
