@@ -2,6 +2,7 @@ package com.moodytunes.spotify;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
@@ -59,9 +60,11 @@ public class SpotifyService {
                 .uri(URI.create(url))
                 .header("Authorization", "Bearer " + accessToken)
                 .GET()
-                .build();
-                
-            HttpResponse<String> response = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+                .build()
+            ;
+            
+            HttpClient basicClient = HttpClient.newHttpClient();
+            HttpResponse<String> response = basicClient.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("Auth test status: " + response.statusCode());
             System.out.println("Auth test body: " + response.body());
             
@@ -314,7 +317,8 @@ public class SpotifyService {
 
         HttpResponse<String> responseJson;
         try {
-            responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpClient basicClient = HttpClient.newHttpClient();
+            responseJson = basicClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (notSuccessful(responseJson.statusCode())) {
                 System.out.println("(recommendTracks) Bad Response status code: " + responseJson.statusCode());
