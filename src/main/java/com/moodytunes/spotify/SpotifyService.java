@@ -221,7 +221,7 @@ public class SpotifyService {
         SpotifyData.UserTopItems topItems = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.UserTopItems.class);
 
         String trackIds = new String();
-        for (int i = 0; i < limit; i++) {
+        for (int i = 0; i < limit - 1; i++) {
             trackIds += topItems.items[i].id + ",";
         }
         trackIds += topItems.items[limit - 1].id;
@@ -237,7 +237,7 @@ public class SpotifyService {
         System.out.println("Access token: " + (accessToken != null ? "Present" : "NULL"));
         System.out.println("Seed tracks: " + tracks);
         System.out.println("Location: " + location);
-        
+
         final int limit = 20;
         final String market = "US";
         final double minAccousticness = recommendation.getAcousticness().get("min");
