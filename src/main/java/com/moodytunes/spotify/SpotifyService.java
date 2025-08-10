@@ -329,6 +329,7 @@ public class SpotifyService {
             if (notSuccessful(responseJson.statusCode())) {
                 System.out.println("(recommendTracks) Bad Response status code: " + responseJson.statusCode());
                 System.out.println("Response body: " + responseJson.body());
+                System.out.println("Request URL: " + urlString);
                 return null;
             }
         }
