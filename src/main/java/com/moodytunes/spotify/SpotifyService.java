@@ -2,9 +2,11 @@ package com.moodytunes.spotify;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
@@ -240,32 +242,52 @@ public class SpotifyService {
 
         final int limit = 20;
         final String market = "US";
-        final double minAccousticness = recommendation.getAcousticness().get("min");
+        final double minAcousticness = recommendation.getAcousticness().get("min");
+        System.out.println("minAcc: " + minAcousticness);
         final double maxAcousticness = recommendation.getAcousticness().get("max");
+        System.out.println("maxAcc: " + maxAcousticness);
         final double minDanceability = recommendation.getDanceability().get("min");
+        System.out.println("minDan: " + minDanceability);
         final double maxDanceability = recommendation.getDanceability().get("max");
+        System.out.println("maxDan: " + maxDanceability);
         final double minEnergy = recommendation.getEnergy().get("min");
+        System.out.println("minEn: " + minEnergy);
         final double maxEnergy = recommendation.getEnergy().get("max");
+        System.out.println("maxEn: " + maxEnergy);
         final double minInstrumentalness = recommendation.getInstrumentalness().get("min");
+        System.out.println("minIns: " + minInstrumentalness);
         final double maxInstrumentalness = recommendation.getInstrumentalness().get("max");
+        System.out.println("maxIns: " + maxInstrumentalness);
         final double minLiveness = recommendation.getLiveness().get("min");
+        System.out.println("minLiv: " + minLiveness);
         final double maxLiveness = recommendation.getLiveness().get("max");
+        System.out.println("maxLiv: " + maxLiveness);
         final double minLoudness = recommendation.getLoudness().get("min");
+        System.out.println("minLou: " + minLoudness);
         final double maxLoudness = recommendation.getLoudness().get("max");
+        System.out.println("maxLou: " + maxLoudness);
         final int minMode = recommendation.getMode().get("min");
+        System.out.println("minMod: " + minMode);
         final int maxMode = recommendation.getMode().get("max");
+        System.out.println("maxMod: " + maxMode);
         final double minSpeechiness = recommendation.getSpeechiness().get("min");
+        System.out.println("minSpe: " + minSpeechiness);
         final double maxSpeechiness = recommendation.getSpeechiness().get("max");
+        System.out.println("maxSpe: " + maxSpeechiness);
         final double minTempo = recommendation.getTempo().get("min");
+        System.out.println("minTem: " + minTempo);
         final double maxTempo = recommendation.getTempo().get("max");
+        System.out.println("maxTem: " + maxTempo);
         final double minValence = recommendation.getValence().get("min");
+        System.out.println("minVal: " + minValence);
         final double maxValence = recommendation.getValence().get("max");
+        System.out.println("maxVal: " + maxValence);
         final int targetPopularity = 70;
         final String urlString = "https://api.spotify.com/v1/recommendations"
             + "?limit=" + limit
             + "&market=" + market
-            + "&seed_tracks=" + tracks
-            + "&min_acousticness=" + minAccousticness
+            + "&seed_tracks=" + URLEncoder.encode(tracks, StandardCharsets.UTF_8)
+            + "&min_acousticness=" + minAcousticness
             + "&max_acousticness=" + maxAcousticness
             + "&min_danceability=" + minDanceability
             + "&max_danceability=" + maxDanceability
