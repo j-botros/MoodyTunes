@@ -233,6 +233,11 @@ public class SpotifyService {
         final Recommendation recommendation = new Recommendation();
         analyzeWeather.recommend(recommendation, location);
 
+        System.out.println("=== DEBUG INFO ===");
+        System.out.println("Access token: " + (accessToken != null ? "Present" : "NULL"));
+        System.out.println("Seed tracks: " + tracks);
+        System.out.println("Location: " + location);
+        
         final int limit = 20;
         final String market = "US";
         final double minAccousticness = recommendation.getAcousticness().get("min");
