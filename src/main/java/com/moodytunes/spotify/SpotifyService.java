@@ -265,12 +265,12 @@ public class SpotifyService {
         final String urlString = "https://api.spotify.com/v1/recommendations"
             + "?market=" + market
             + "&seed_genres=" + genre
-            + "&target_danceability=" + danceability
+            /*+ "&target_danceability=" + danceability
             + "&target_energy=" + energy
             + "&target_loudness=" + loudness
             + "&target_speechiness=" + speechiness
             + "&target_tempo=" + tempo
-            + "&target_valence=" + valence
+            + "&target_valence=" + valence*/
         ;
 
         HttpRequest request;
