@@ -259,7 +259,7 @@ public class SpotifyService {
         final String urlString = "https://api.spotify.com/v1/recommendations"
             + "?limit=" + limit
             + "&market=" + market
-            + "&tracks=" + tracks
+            + "&seed_tracks=" + tracks
             + "&min_acousticness=" + minAccousticness
             + "&max_acousticness=" + maxAcousticness
             + "&min_danceability=" + minDanceability
