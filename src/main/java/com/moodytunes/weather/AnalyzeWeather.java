@@ -1,9 +1,11 @@
 package com.moodytunes.weather;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.moodytunes.spotify.Recommendation;
 
+@Component
 public class AnalyzeWeather {
     @Autowired
     WeatherService weatherService;

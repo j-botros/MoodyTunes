@@ -10,6 +10,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,9 @@ import com.moodytunes.weather.AnalyzeWeather;
 
 @Service
 public class SpotifyService {
+    @Autowired
+    private AnalyzeWeather analyzeWeather;
+    
     @Value("${SPOTIFY_CLIENT_ID}")
     private String clientId;
     
@@ -114,7 +118,7 @@ public class SpotifyService {
         return accessData.access_token;
     }
 
-    private static String getUserId(String accessToken) {
+    private String getUserId(String accessToken) {
         final String urlString = "https://api.spotify.com/v1/me";
 
         HttpRequest request;
@@ -167,7 +171,7 @@ public class SpotifyService {
         return userData.id;
     }
 
-    private static String getTop5Items(String accessToken) {
+    private String getTop5Items(String accessToken) {
         final int limit = 5;
         final String urlString = "https://api.spotify.com/v1/me/top/tracks"
             + "?limit=" + limit
@@ -225,10 +229,9 @@ public class SpotifyService {
         return trackIds;
     }
 
-    private static String[] recommendTracks(String accessToken, String tracks, String location) {
+    private String[] recommendTracks(String accessToken, String tracks, String location) {
         final Recommendation recommendation = new Recommendation();
-        AnalyzeWeather analyzer = new AnalyzeWeather();
-        analyzer.recommend(recommendation, location);
+        analyzeWeather.recommend(recommendation, location);
 
         final int limit = 20;
         final String market = "US";
@@ -331,7 +334,7 @@ public class SpotifyService {
         return trackUris;
     }
 
-    private static String createEmptyPlaylist(String accessToken, String userId, String playlistName, String playlistDescription) {
+    private String createEmptyPlaylist(String accessToken, String userId, String playlistName, String playlistDescription) {
         if (userId == null || userId.isBlank()) return null;
         if (playlistName == null || playlistName.isBlank()) return null;
         if (playlistDescription == null || playlistDescription.isBlank()) return null;
@@ -400,7 +403,7 @@ public class SpotifyService {
         return playlist.id;
     }
 
-    private static void addToPlaylist(String accessToken, String[] tracks, String playlistId) {
+    private void addToPlaylist(String accessToken, String[] tracks, String playlistId) {
         // Add tracks to playlist
         final String urlString = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks";
 
