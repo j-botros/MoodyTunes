@@ -19,7 +19,7 @@ public class Recommendation {
         Map.entry("tornado", new String[] {"genre:\"Hardcore\"", "genre:\"Screamo\""})
     );
     
-    private String[] genre;
+    private String[] genres;
 
     @Override
     public String toString() {
@@ -27,17 +27,17 @@ public class Recommendation {
     }
 
     public Recommendation() {
-        genre = new String[] {"genre:\"Pop\""};
+        genres = new String[] {"genre:\"Pop\""};
     }
 
-    public Recommendation(String[] genre) {
-        this.genre = genre;
+    public Recommendation(String[] genres) {
+        this.genres = genres;
     }
 
-    public String[] getGenre() {
-        return genre;
+    public String[] getGenres() {
+        return genres;
     }
-    public void setGenre(String[] genre) {
-        this.genre = genre;
+    public void setGenres(String[] genres) {
+        this.genres = genres;
     }
 }

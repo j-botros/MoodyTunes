@@ -41,7 +41,7 @@ public class AnalyzeWeather {
             case WeatherCodes.THUNDERSTORM_RAIN_HEAVY:
 
             case WeatherCodes.THUNDERSTORM_RAGGED:
-                recommendation.setGenre(Recommendation.GENRES.get("thunder"));
+                recommendation.setGenres(Recommendation.GENRES.get("thunder"));
                 break;
 
             // Drizzle
@@ -62,7 +62,7 @@ public class AnalyzeWeather {
             case WeatherCodes.DRIZZLE_RAIN_HEAVY:
 
             case WeatherCodes.DRIZZLE_SHOWER_RAGGED:
-                recommendation.setGenre(Recommendation.GENRES.get("drizzle"));
+                recommendation.setGenres(Recommendation.GENRES.get("drizzle"));
                 break;
 
             // Rain
@@ -85,7 +85,7 @@ public class AnalyzeWeather {
             case WeatherCodes.RAIN_EXTREME:
 
             case WeatherCodes.RAIN_FREEZING:
-                recommendation.setGenre(Recommendation.GENRES.get("rain"));
+                recommendation.setGenres(Recommendation.GENRES.get("rain"));
                 break;
 
             // Snow
@@ -110,7 +110,7 @@ public class AnalyzeWeather {
             case WeatherCodes.SNOW_SHOWER_HEAVY:
 
             case WeatherCodes.SNOW_HEAVY:
-                recommendation.setGenre(Recommendation.GENRES.get("snow"));
+                recommendation.setGenres(Recommendation.GENRES.get("snow"));
                 break;
 
             // Atmosphere
@@ -121,7 +121,7 @@ public class AnalyzeWeather {
             case WeatherCodes.HAZE:
 
             case WeatherCodes.FOG:
-                recommendation.setGenre(Recommendation.GENRES.get("foggy"));
+                recommendation.setGenres(Recommendation.GENRES.get("foggy"));
                 break;
 
             case WeatherCodes.DUST:
@@ -129,19 +129,19 @@ public class AnalyzeWeather {
             case WeatherCodes.SAND_WHIRLS:
 
             case WeatherCodes.SAND:
-                recommendation.setGenre(Recommendation.GENRES.get("sandy"));
+                recommendation.setGenres(Recommendation.GENRES.get("sandy"));
                 break;
 
             case WeatherCodes.VOLCANIC_ASH:
-                recommendation.setGenre(Recommendation.GENRES.get("volcanic-ash"));
+                recommendation.setGenres(Recommendation.GENRES.get("volcanic-ash"));
                 break;
 
             case WeatherCodes.SQUALLS:
-                recommendation.setGenre(Recommendation.GENRES.get("squalls"));
+                recommendation.setGenres(Recommendation.GENRES.get("squalls"));
                 break;
 
             case WeatherCodes.TORNADO:
-                recommendation.setGenre(Recommendation.GENRES.get("tornado"));
+                recommendation.setGenres(Recommendation.GENRES.get("tornado"));
                 break;
 
             // Clear
@@ -156,16 +156,16 @@ public class AnalyzeWeather {
                 final double TEMPERATURE = weatherData.main.temp;
                 
                 if (TEMPERATURE >= 303.15) {
-                    recommendation.setGenre(Recommendation.GENRES.get("hot"));
+                    recommendation.setGenres(Recommendation.GENRES.get("hot"));
                 }
                 else if (TEMPERATURE >= 293.15) {
-                    recommendation.setGenre(Recommendation.GENRES.get("warm"));
+                    recommendation.setGenres(Recommendation.GENRES.get("warm"));
                 }
                 else if (TEMPERATURE >= 285.15) {
-                    recommendation.setGenre(Recommendation.GENRES.get("mild"));
+                    recommendation.setGenres(Recommendation.GENRES.get("mild"));
                 }
                 else {
-                    recommendation.setGenre(Recommendation.GENRES.get("cold"));
+                    recommendation.setGenres(Recommendation.GENRES.get("cold"));
                 }
         }
     }

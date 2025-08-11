@@ -58,12 +58,12 @@ public class SpotifyService {
         Recommendation recommendation = new Recommendation();
         analyzeWeather.recommend(recommendation, location);
 
-        final int queryLimit = 20 / recommendation.getGenre().length;
-        ArrayList<String> trackUris = new ArrayList<>(queryLimit * recommendation.getGenre().length);
+        final int queryLimit = 20 / recommendation.getGenres().length;
+        ArrayList<String> trackUris = new ArrayList<>(queryLimit * recommendation.getGenres().length);
 
-        for (int i = 0; i < recommendation.getGenre().length; i++) {
+        for (String genre :  recommendation.getGenres()) {
 
-            final String encodedQuery = URLEncoder.encode(recommendation.getGenre()[i], StandardCharsets.UTF_8);
+            final String encodedQuery = URLEncoder.encode(genre, StandardCharsets.UTF_8);
             
             final String urlString = baseUrl
                 + "?q=" + encodedQuery
@@ -124,8 +124,8 @@ public class SpotifyService {
 
             SpotifyData.SearchedTracks searched = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.SearchedTracks.class);
 
-            for (int k = 0; k < searched.tracks.items.length; i++) {
-                trackUris.add(searched.tracks.items[k].uri);
+            for (SpotifyData.TrackObject song : searched.tracks.items) {
+                trackUris.add(song.uri);
             }
         }
 
