@@ -4,18 +4,18 @@ import java.util.Map;
 
 public class Recommendation {
     public static final Map<String, String> GENRES = Map.ofEntries(
-        Map.entry("thunder", "genre:\"heavy-metal\" OR genre:\"hard-rock\""),
-        Map.entry("drizzle", "genre:\"rainy-day\" OR genre:\"ambient\" OR genre:\"chill\" OR genre:\"r-n-b\""),
-        Map.entry("rain", "genre:\"rainy-day\" OR genre:\"ambient\" OR genre:\"chill\" OR genre:\"r-n-b\""),
+        Map.entry("thunder", "genre:\"metal\" OR genre:\"hard-rock\""),
+        Map.entry("drizzle", "genre:\"ambient\" OR genre:\"chill\" OR genre:\"r-n-b\""),
+        Map.entry("rain", "genre:\"ambient\" OR genre:\"chill\" OR genre:\"r-n-b\""),
         Map.entry("snow", "genre:\"ambient\" OR genre:\"chill\" OR genre:\"r-n-b\""),
         Map.entry("foggy", "genre:\"soul\" OR genre:\"chill\" OR genre:\"r-n-b\" OR genre:\"trip-hop\""),
-        Map.entry("sandy", "genre:\"psych-rock\" OR genre:\"trip-hop\" OR genre:\"trance\" OR genre:\"groove\""),
+        Map.entry("sandy", "genre:\"trip-hop\" OR genre:\"trance\" OR genre:\"groove\""),
         Map.entry("volcanic-ash", "genre:\"grunge\" OR genre:\"rock\" OR genre:\"metal\""),
         Map.entry("squalls", "genre:\"ambient\" OR genre:\"chill\" OR genre:\"r-n-b\""),
         Map.entry("cold", "genre:\"chill\""),
         Map.entry("mild", "genre:\"pop\" OR genre:\"rock\" OR genre:\"hip-hop\""),
-        Map.entry("warm", "genre:\"summer\" OR genre:\"dance\""),
-        Map.entry("hot", "genre:\"summer\""),
+        Map.entry("warm", "genre:\"pop\" OR genre:\"dance\""),
+        Map.entry("hot", "genre:\"pop\" OR genre:\"dance\" OR genre:\"tropical-house\""),
         Map.entry("tornado", "genre:\"hardcore\"")
     );
     
