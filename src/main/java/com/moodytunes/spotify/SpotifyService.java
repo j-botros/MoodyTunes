@@ -45,11 +45,11 @@ public class SpotifyService {
 
     public void handlePlaylistRedirect(String accessToken, String location, String playlistName, String playlistDesc) {
         final String userId = getUserId(accessToken);
-        getTop5Items(accessToken);
-        testAuth(accessToken);
-        final String[] recTracks = recommendTracks(accessToken, location);
+        //getTop5Items(accessToken);
+        //testAuth(accessToken);
+        //final String[] recTracks = recommendTracks(accessToken, location);
         final String playlistId = createEmptyPlaylist(accessToken, userId, playlistName, playlistDesc);
-        addToPlaylist(accessToken, recTracks, playlistId);
+        //addToPlaylist(accessToken, recTracks, playlistId);
     }
 
     private void testAuth(String accessToken) {
