@@ -351,7 +351,7 @@ public class SpotifyService {
         System.out.println("Genre: " + genre);
         final String urlString = "https://api.spotify.com/v1/recommendations"
             //+ "?market=" + market
-            + "?seed_genres=[pop]" //+ genre
+            + "?seed_genres=[\"pop\"]" //+ genre
             /*+ "&target_danceability=" + danceability
             + "&target_energy=" + energy
             + "&target_loudness=" + loudness
