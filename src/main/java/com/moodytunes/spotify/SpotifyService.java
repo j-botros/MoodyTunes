@@ -7,7 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,177 +47,92 @@ public class SpotifyService {
 
     public void handlePlaylistRedirect(String accessToken, String location, String playlistName, String playlistDesc) {
         final String userId = getUserId(accessToken);
-        //getTop5Items(accessToken);
-        //testAuth(accessToken);
-        //final String[] recTracks = recommendTracks(accessToken, location);
-        final String[] tracks = searchTracks(accessToken, location);
+        final ArrayList<String> tracks = searchTracks(accessToken, location);
         final String playlistId = createEmptyPlaylist(accessToken, userId, playlistName, playlistDesc);
         addToPlaylist(accessToken, tracks, playlistId);
     }
 
-    private void testAuth(String accessToken) {
-        String url = "https://api.spotify.com/v1/recommendations/available-genre-seeds";
-        
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Authorization", "Bearer " + accessToken)
-                .GET()
-                .build()
-            ;
-            
-            HttpResponse<String> response = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println("Auth test status: " + response.statusCode());
-            System.out.println("Auth test body: " + response.body());
-            
-        } catch (Exception e) {
-            System.out.println("Auth test error: " + e);
-        }
-    }
-
-    private String[] searchTracks(String accessToken, String location) {
+    private ArrayList<String> searchTracks(String accessToken, String location) {
         final String baseUrl =  "https://api.spotify.com/v1/search";
 
         Recommendation recommendation = new Recommendation();
         analyzeWeather.recommend(recommendation, location);
 
-        final String encodedQuery = URLEncoder.encode(recommendation.getGenre(), StandardCharsets.UTF_8);
-        
-        final String urlString = baseUrl
-            + "?q=" + encodedQuery
-            + "&type=track"
-            + "&market=US"
-            + "&limit=20"
-        ;
+        final int queryLimit = 20 / recommendation.getGenre().length;
+        ArrayList<String> trackUris = new ArrayList<>(queryLimit * recommendation.getGenre().length);
 
-        HttpRequest request;
-        try {
-            request = HttpRequest.newBuilder()
-                .uri(URI.create(urlString))
-                .header("Authorization", "Bearer " + accessToken)
-                .GET()
-                .build()
+        for (int i = 0; i < recommendation.getGenre().length; i++) {
+
+            final String encodedQuery = URLEncoder.encode(recommendation.getGenre()[i], StandardCharsets.UTF_8);
+            
+            final String urlString = baseUrl
+                + "?q=" + encodedQuery
+                + "&type=track"
+                + "&market=US"
+                + "&limit=" + queryLimit
             ;
 
-            if (request == null) {
-                System.out.println("(searchTracks) Null request.");
+            HttpRequest request;
+            try {
+                request = HttpRequest.newBuilder()
+                    .uri(URI.create(urlString))
+                    .header("Authorization", "Bearer " + accessToken)
+                    .GET()
+                    .build()
+                ;
+
+                if (request == null) {
+                    System.out.println("(searchTracks) Null request.");
+                    return null;
+                }
+            }
+            catch (IllegalArgumentException e) {
+                System.out.println("(searchTracks) Invalid URI: " + e);
                 return null;
             }
-        }
-        catch (IllegalArgumentException e) {
-            System.out.println("(searchTracks) Invalid URI: " + e);
-            return null;
-        }
 
-        HttpResponse<String> responseJson;
-        try {
-            responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> responseJson;
+            try {
+                responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (notSuccessful(responseJson.statusCode())) {
-                System.out.println("(searchTracks) Bad Response status code: " + responseJson.statusCode());
-                System.out.println("Response body: " + responseJson.body());
-                System.out.println("Request URL: " + urlString);
-                System.out.println("Request Headers: " + request.headers().map());
-                System.out.println("Full Response: " + responseJson);
+                if (notSuccessful(responseJson.statusCode())) {
+                    System.out.println("(searchTracks) Bad Response status code: " + responseJson.statusCode());
+                    System.out.println("Response body: " + responseJson.body());
+                    System.out.println("Request URL: " + urlString);
+                    System.out.println("Request Headers: " + request.headers().map());
+                    System.out.println("Full Response: " + responseJson);
+                    return null;
+                }
+                System.out.println("(searchTracks) Full Response: " + responseJson);
+            }
+            catch (InterruptedException e) {
+                System.out.println("(searchTracks) Response interrupted: " + e);
                 return null;
             }
-            System.out.println("(searchTracks) Full Response: " + responseJson);
-        }
-        catch (InterruptedException e) {
-            System.out.println("(searchTracks) Response interrupted: " + e);
-            return null;
-        }
-        catch (IOException e) {
-            System.out.println("(searchTracks) Failed to Send or Receive response: " + e);
-            return null;
-        }
-        catch (IllegalArgumentException e) {
-            System.out.println("(searchTracks) Invalid Response 'request' argument: " + e);
-            return null;
-        }
-        catch (SecurityException e) {
-            System.out.println("(searchTracks) Access denied: " + e);
-            return null;
+            catch (IOException e) {
+                System.out.println("(searchTracks) Failed to Send or Receive response: " + e);
+                return null;
+            }
+            catch (IllegalArgumentException e) {
+                System.out.println("(searchTracks) Invalid Response 'request' argument: " + e);
+                return null;
+            }
+            catch (SecurityException e) {
+                System.out.println("(searchTracks) Access denied: " + e);
+                return null;
+            }
+
+            SpotifyData.SearchedTracks searched = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.SearchedTracks.class);
+
+            for (int k = 0; k < searched.tracks.items.length; i++) {
+                trackUris.add(searched.tracks.items[k].uri);
+            }
         }
 
-        SpotifyData.SearchedTracks searched = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.SearchedTracks.class);
-
-        String[] trackUris = new String[searched.tracks.items.length];
-
-        for (int i = 0; i < searched.tracks.items.length; i++) {
-            trackUris[i] = searched.tracks.items[i].uri;
-        }
-
-        System.out.println("Searched tracks: " + Arrays.toString(trackUris));
+        System.out.println("Searched tracks: " + trackUris);
 
         return trackUris;
     }
-
-    /*
-    public String exchangeCredentialsForToken() {
-        final String grantType = "client_credentials";
-        final String urlString = "https://accounts.spotify.com/api/token";
-
-        final String formData = "grant_type=" + grantType;
-
-        final String authorization = Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes());
-
-        HttpRequest request;
-        try {
-            request = HttpRequest.newBuilder()
-                .uri(URI.create("https://accounts.spotify.com/api/token"))
-                .header("Content-Type", "application/x-www-form-urlencoded")
-                .header("Authorization", "Basic " + authorization)
-                .POST(HttpRequest.BodyPublishers.ofString(formData)) // Form data, not JSON
-                .build()
-            ;
-
-            if (request == null) {
-                System.out.println("(exchangeCredentialsForToken) Null POST request.");
-            }
-        }
-        catch (IllegalArgumentException e) {
-            System.out.println("(exchangeCredentialsForToken) Invalid URI: " + e);
-            return null;
-        }
-
-        HttpResponse<String> responseJson;
-        try {
-            responseJson = MoodyTunesApp.CLIENT.send(request, BodyHandlers.ofString());
-
-            if (notSuccessful(responseJson.statusCode())) {
-                System.out.println("(exchangeCredentialsForToken) Bad Response status code: " + responseJson.statusCode());
-                System.out.println("Response body: " + responseJson.body());
-                return null;
-            }
-        }
-        catch (InterruptedException e) {
-            System.out.println("(exchangeCredentialsForToken) Response interrupted: " + e);
-            return null;
-        }
-        catch (IOException e) {
-            System.out.println("(exchangeCredentialsForToken) Failed to Send or Receive response: " + e);
-            return null;
-        }
-        catch (IllegalArgumentException e) {
-            System.out.println("(exchangeCredentialsForToken) Invalid Response 'request' argument: " + e);
-            return null;
-        }
-        catch (SecurityException e) {
-            System.out.println("(exchangeCredentialsForToken) Access denied: " + e);
-            return null;
-        }
-
-        SpotifyData.ClientAccessData accessData = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.ClientAccessData.class);
-
-        if (accessData == null || accessData.access_token == null) {
-            System.out.println("(exchangeCredentialsForToken) Failed to return access data and/or access token.");
-            return null;
-        }
-
-        return accessData.access_token;
-    }
-    */
 
     public String exchangeCodeForToken(String code) {
         final String grantType = "authorization_code";
@@ -339,167 +254,6 @@ public class SpotifyService {
         return userData.id;
     }
 
-    private String getTop5Items(String accessToken) {
-        final int limit = 5;
-        final String urlString = "https://api.spotify.com/v1/me/top/tracks"
-            + "?limit=" + limit
-        ;
-
-        HttpRequest request;
-        try {
-            request = HttpRequest.newBuilder()
-                .uri(URI.create(urlString))
-                .header("Authorization", "Bearer " + accessToken)
-                .GET()
-                .build()
-            ;
-        }
-        catch (IllegalArgumentException e) {
-            System.out.println("(getTop5Items) Invalid URI: " + e);
-            return null;
-        }
-
-        HttpResponse<String> responseJson;
-        try {
-            responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println("top5 json: " + responseJson);
-
-            if (notSuccessful(responseJson.statusCode())) {
-                System.out.println("(getTop5Items) Bad Response status code: " + responseJson.statusCode());
-                System.out.println("Response body: " + responseJson.body());
-                return null;
-            }
-        }
-        catch (InterruptedException e) {
-            System.out.println("(getTop5Items) Response interrupted: " + e);
-            return null;
-        }
-        catch (IOException e) {
-            System.out.println("(getTop5Items) Failed to Send or Receive response: " + e);
-            return null;
-        }
-        catch (IllegalArgumentException e) {
-            System.out.println("(getTop5Items) Invalid Response 'request' argument: " + e);
-            return null;
-        }
-        catch (SecurityException e) {
-            System.out.println("(getTop5Items) Access denied: " + e);
-            return null;
-        }
-
-        SpotifyData.UserTopItems topItems = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.UserTopItems.class);
-
-        StringBuilder trackIds = new StringBuilder();
-        boolean first = true;
-
-        for (int i = 0; i < limit; i++) {
-            if (validateTrackId(topItems.items[i].id, accessToken)) {
-                if (!first) {
-                    trackIds.append(",");
-                }
-                trackIds.append(topItems.items[i].id);
-                first = false;
-            }
-        }
-
-        String result = trackIds.toString();
-
-        return result;
-    }
-
-    private String[] recommendTracks(String accessToken, String location) {
-        final Recommendation recommendation = new Recommendation();
-        analyzeWeather.recommend(recommendation, location);
-
-        System.out.println("=== DEBUG INFO ===");
-        System.out.println("Access token: " + (accessToken != null ? "Present" : "NULL"));
-        System.out.println("Location: " + location);
-        
-        final String market = "US";
-        final double danceability = recommendation.getDanceability();
-        System.out.println("Danceability: " + danceability);
-        final double energy = recommendation.getEnergy();
-        System.out.println("Energy: " + energy);
-        final double loudness = recommendation.getLoudness();
-        System.out.println("Loudness: " + loudness);
-        final double speechiness = recommendation.getSpeechiness();
-        System.out.println("Speechiness: " + speechiness);
-        final double tempo = recommendation.getTempo();
-        System.out.println("Tempo: " + tempo);
-        final double valence = recommendation.getValence();
-        System.out.println("Valence: " + valence);
-        final String genre = recommendation.getGenre();
-        System.out.println("Genre: " + genre);
-        final String urlString = "https://api.spotify.com/v1/recommendations"
-            //+ "?market=" + market
-            + "?seed_genres=[\"pop\"]" //+ genre
-            /*+ "&target_danceability=" + danceability
-            + "&target_energy=" + energy
-            + "&target_loudness=" + loudness
-            + "&target_speechiness=" + speechiness
-            + "&target_tempo=" + tempo
-            + "&target_valence=" + valence*/
-        ;
-
-        HttpRequest request;
-        try {
-            request = HttpRequest.newBuilder()
-                .uri(URI.create(urlString))
-                .header("Authorization", "Bearer " + accessToken)
-                .GET()
-                .build()
-            ;
-
-            if (request == null) {
-                System.out.println("(recommendTracks) Null request.");
-                return null;
-            }
-        }
-        catch (IllegalArgumentException e) {
-            System.out.println("(recommendTracks) Invalid URI: " + e);
-            return null;
-        }
-
-        HttpResponse<String> responseJson;
-        try {
-            responseJson = MoodyTunesApp.CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (notSuccessful(responseJson.statusCode())) {
-                System.out.println("(recommendTracks) Bad Response status code: " + responseJson.statusCode());
-                System.out.println("Response body: " + responseJson.body());
-                System.out.println("Request URL: " + urlString);
-                System.out.println("Request Headers: " + request.headers().map());
-                System.out.println("Full Response: " + responseJson);
-                return null;
-            }
-        }
-        catch (InterruptedException e) {
-            System.out.println("(recommendTracks) Response interrupted: " + e);
-            return null;
-        }
-        catch (IOException e) {
-            System.out.println("(recommendTracks) Failed to Send or Receive response: " + e);
-            return null;
-        }
-        catch (IllegalArgumentException e) {
-            System.out.println("(recommendTracks) Invalid Response 'request' argument: " + e);
-            return null;
-        }
-        catch (SecurityException e) {
-            System.out.println("(recommendTracks) Access denied: " + e);
-            return null;
-        }
-
-        SpotifyData.RecommendedSongs recommendedSongs = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.RecommendedSongs.class);
-
-        String[] trackUris = new String[recommendedSongs.tracks.length];
-        for (int i = 0; i < recommendedSongs.tracks.length; i++) {
-            trackUris[i] = recommendedSongs.tracks[i].uri;
-        }
-
-        return trackUris;
-    }
-
     private String createEmptyPlaylist(String accessToken, String userId, String playlistName, String playlistDescription) {
         if (userId == null || userId.isBlank()) return null;
         if (playlistName == null || playlistName.isBlank()) return null;
@@ -569,12 +323,12 @@ public class SpotifyService {
         return playlist.id;
     }
 
-    private void addToPlaylist(String accessToken, String[] tracks, String playlistId) {
+    private void addToPlaylist(String accessToken, ArrayList<String> tracks, String playlistId) {
         // Add tracks to playlist
         final String urlString = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks";
 
         Map<String, Object> bodyMap = new HashMap<>();
-        bodyMap.put("uris", Arrays.asList(tracks));
+        bodyMap.put("uris", tracks);
         bodyMap.put("position", 0);
 
         final String jsonBody = MoodyTunesApp.GSON.toJson(bodyMap);

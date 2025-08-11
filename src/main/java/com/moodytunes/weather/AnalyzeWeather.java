@@ -41,12 +41,6 @@ public class AnalyzeWeather {
             case WeatherCodes.THUNDERSTORM_RAIN_HEAVY:
 
             case WeatherCodes.THUNDERSTORM_RAGGED:
-                recommendation.setDanceability(0.4);
-                recommendation.setEnergy(0.4);
-                recommendation.setLoudness(-10.0);
-                recommendation.setSpeechiness(0.4);
-                recommendation.setTempo(110.0);
-                recommendation.setValence(0.2);
                 recommendation.setGenre(Recommendation.GENRES.get("thunder"));
                 break;
 
@@ -68,12 +62,6 @@ public class AnalyzeWeather {
             case WeatherCodes.DRIZZLE_RAIN_HEAVY:
 
             case WeatherCodes.DRIZZLE_SHOWER_RAGGED:
-                recommendation.setDanceability(0.3);
-                recommendation.setEnergy(0.4);
-                recommendation.setLoudness(-30.0);
-                recommendation.setSpeechiness(0.3);
-                recommendation.setTempo(80.0);
-                recommendation.setValence(0.35);
                 recommendation.setGenre(Recommendation.GENRES.get("drizzle"));
                 break;
 
@@ -97,12 +85,6 @@ public class AnalyzeWeather {
             case WeatherCodes.RAIN_EXTREME:
 
             case WeatherCodes.RAIN_FREEZING:
-                recommendation.setDanceability(0.4);
-                recommendation.setEnergy(0.4);
-                recommendation.setLoudness(-25.0);
-                recommendation.setSpeechiness(0.3);
-                recommendation.setTempo(80.0);
-                recommendation.setValence(0.20);
                 recommendation.setGenre(Recommendation.GENRES.get("rain"));
                 break;
 
@@ -128,12 +110,6 @@ public class AnalyzeWeather {
             case WeatherCodes.SNOW_SHOWER_HEAVY:
 
             case WeatherCodes.SNOW_HEAVY:
-                recommendation.setDanceability(0.3);
-                recommendation.setEnergy(0.3);
-                recommendation.setLoudness(-45.0);
-                recommendation.setSpeechiness(0.3);
-                recommendation.setTempo(80.0);
-                recommendation.setValence(0.7);
                 recommendation.setGenre(Recommendation.GENRES.get("snow"));
                 break;
 
@@ -145,12 +121,6 @@ public class AnalyzeWeather {
             case WeatherCodes.HAZE:
 
             case WeatherCodes.FOG:
-                recommendation.setDanceability(0.4);
-                recommendation.setEnergy(0.2);
-                recommendation.setLoudness(-40.0);
-                recommendation.setSpeechiness(0.1);
-                recommendation.setTempo(60.0);
-                recommendation.setValence(0.4);
                 recommendation.setGenre(Recommendation.GENRES.get("foggy"));
                 break;
 
@@ -159,42 +129,18 @@ public class AnalyzeWeather {
             case WeatherCodes.SAND_WHIRLS:
 
             case WeatherCodes.SAND:
-                recommendation.setDanceability(0.3);
-                recommendation.setEnergy(0.5);
-                recommendation.setLoudness(-30.0);
-                recommendation.setSpeechiness(0.2);
-                recommendation.setTempo(100.0);
-                recommendation.setValence(0.4);
                 recommendation.setGenre(Recommendation.GENRES.get("sandy"));
                 break;
 
             case WeatherCodes.VOLCANIC_ASH:
-                recommendation.setDanceability(0.2);
-                recommendation.setEnergy(0.8);
-                recommendation.setLoudness(-30.0);
-                recommendation.setSpeechiness(0.5);
-                recommendation.setTempo(120.0);
-                recommendation.setValence(0.3);
                 recommendation.setGenre(Recommendation.GENRES.get("volcanic-ash"));
                 break;
 
             case WeatherCodes.SQUALLS:
-                recommendation.setDanceability(0.4);
-                recommendation.setEnergy(0.8);
-                recommendation.setLoudness(-30.0);
-                recommendation.setSpeechiness(0.3);
-                recommendation.setTempo(140.0);
-                recommendation.setValence(0.4);
                 recommendation.setGenre(Recommendation.GENRES.get("squalls"));
                 break;
 
             case WeatherCodes.TORNADO:
-                recommendation.setDanceability(0.4);
-                recommendation.setEnergy(1.0);
-                recommendation.setLoudness(-10.0);
-                recommendation.setSpeechiness(0.6);
-                recommendation.setTempo(160.0);
-                recommendation.setValence(0.1);
                 recommendation.setGenre(Recommendation.GENRES.get("tornado"));
                 break;
 
@@ -210,39 +156,15 @@ public class AnalyzeWeather {
                 final double TEMPERATURE = weatherData.main.temp;
                 
                 if (TEMPERATURE >= 303.15) {
-                    recommendation.setDanceability(1.0);
-                    recommendation.setEnergy(0.9);
-                    recommendation.setLoudness(-60.0);
-                    recommendation.setSpeechiness(0.6);
-                    recommendation.setTempo(120.0);
-                    recommendation.setValence(1.0);
                     recommendation.setGenre(Recommendation.GENRES.get("hot"));
                 }
                 else if (TEMPERATURE >= 293.15) {
-                    recommendation.setDanceability(0.7);
-                    recommendation.setEnergy(0.7);
-                    recommendation.setLoudness(-60.0);
-                    recommendation.setSpeechiness(0.6);
-                    recommendation.setTempo(90.0);
-                    recommendation.setValence(0.7);
                     recommendation.setGenre(Recommendation.GENRES.get("warm"));
                 }
                 else if (TEMPERATURE >= 285.15) {
-                    recommendation.setDanceability(0.5);
-                    recommendation.setEnergy(0.6);
-                    recommendation.setLoudness(-60.0);
-                    recommendation.setSpeechiness(0.5);
-                    recommendation.setTempo(75.0);
-                    recommendation.setValence(0.6);
                     recommendation.setGenre(Recommendation.GENRES.get("mild"));
                 }
                 else {
-                    recommendation.setDanceability(045);
-                    recommendation.setEnergy(0.5);
-                    recommendation.setLoudness(-45.0);
-                    recommendation.setSpeechiness(0.4);
-                    recommendation.setTempo(60.0);
-                    recommendation.setValence(0.4);
                     recommendation.setGenre(Recommendation.GENRES.get("cold"));
                 }
         }

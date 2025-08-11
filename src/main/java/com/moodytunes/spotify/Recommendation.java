@@ -3,29 +3,23 @@ package com.moodytunes.spotify;
 import java.util.Map;
 
 public class Recommendation {
-    public static final Map<String, String> GENRES = Map.ofEntries(
-        Map.entry("thunder", "genre:\"Metal\""/* OR genre:\"Nu Metal\" OR genre:\"Hard Rock\"" */),
-        Map.entry("drizzle", "genre:\"Ambient\""/* OR genre:\"R&b\"" */),
-        Map.entry("rain", "genre:\"Ambient\""/* OR genre:\"R&b\"" */),
-        Map.entry("snow", "genre:\"Ambient\""/* OR genre:\"R&b\""*/),
-        Map.entry("foggy", /* "genre:\"Soul\" OR genre:\"R&b\" OR */"genre:\"Psychedelic Rock\""),
-        Map.entry("sandy", "genre:\"Soul\""/* OR genre:\"trance\" OR genre:\"groove\"" */),
-        Map.entry("volcanic-ash", "genre:\"Grunge\""/* OR genre:\"Rock\" OR genre:\"Metal\"" */),
-        Map.entry("squalls", /* "genre:\"Ambient\" OR */"genre:\"Rap\""),
-        Map.entry("cold", "genre:\"R&b\""/* OR genre:\"Pop\""*/),
-        Map.entry("mild", /*"genre:\"Pop\" OR genre:\"Rock\" OR */ "genre:\"Hip Hop\""/* OR genre:\"Rap\"" */),
-        Map.entry("warm", "genre:\"Pop\""/* OR genre:\"Rock\" OR genre:\"Hip Hop\" OR genre:\"Rap\" OR genre:\"Dance Pop\" OR genre:\"Dance Rock\""*/),
-        Map.entry("hot", /* "genre:\"Pop\" OR */"genre:\"Dance Pop\""/* OR genre:\"Dance Rock\""*/),
-        Map.entry("tornado", "genre:\"Hardcore\""/* OR genre:\"Screamo\""*/)
+    public static final Map<String, String[]> GENRES = Map.ofEntries(
+        Map.entry("thunder", new String[] {"genre:\"Metal\"", "genre:\"Nu Metal\"", "genre:\"Hard Rock\""}),
+        Map.entry("drizzle", new String[] {"genre:\"Ambient\"", "genre:\"R&b\""}),
+        Map.entry("rain", new String[] {"genre:\"Ambient\"", "genre:\"R&b\""}),
+        Map.entry("snow", new String[] {"genre:\"Ambient\"", "genre:\"R&b\""}),
+        Map.entry("foggy", new String[] {"genre:\"Soul\"", "genre:\"R&b\"", "genre:\"Psychedelic Rock\""}),
+        Map.entry("sandy", new String[] {"genre:\"Soul\"", "genre:\"trance\"", "genre:\"groove\""}),
+        Map.entry("volcanic-ash", new String[] {"genre:\"Grunge\"", "genre:\"Rock\"", "genre:\"Metal\""}),
+        Map.entry("squalls", new String[] {"genre:\"Ambient\"", "genre:\"Rap\""}),
+        Map.entry("cold", new String[] {"genre:\"R&b\"", "genre:\"Pop\""}),
+        Map.entry("mild", new String[] {"genre:\"Pop\"", "genre:\"Rock\"", "genre:\"Hip Hop\"", "genre:\"Rap\""}),
+        Map.entry("warm", new String[] {"genre:\"Pop\"", "genre:\"Rock\"", "genre:\"Hip Hop\"", "genre:\"Rap\"", "genre:\"Dance Pop\"", "genre:\"Dance Rock\""}),
+        Map.entry("hot", new String[] {"genre:\"Pop\"", "genre:\"Dance Pop\"", "genre:\"Dance Rock\""}),
+        Map.entry("tornado", new String[] {"genre:\"Hardcore\"", "genre:\"Screamo\""})
     );
     
-    private double danceability;
-    private double energy;
-    private double loudness;
-    private double speechiness;
-    private double tempo;
-    private double valence;
-    private String genre;
+    private String[] genre;
 
     @Override
     public String toString() {
@@ -33,116 +27,17 @@ public class Recommendation {
     }
 
     public Recommendation() {
-        danceability = 0.5;
-        energy = 0.6;
-        loudness = -10;
-        speechiness = 0.1;
-        tempo = 120.0;
-        valence = 0.5;
+        genre = new String[] {"genre:\"Pop\""};
     }
 
-    public Recommendation(Builder builder) {
-        this.danceability = builder.danceability;
-        this.energy = builder.energy;
-        this.tempo = builder.tempo;
-        this.valence = builder.valence;
-        this.loudness = builder.loudness;
-        this.speechiness = builder.speechiness;
-        this.genre = builder.genre;
-    }
-
-    // Getters
-    public double getDanceability() {
-        return danceability;
-    }
-    public double getEnergy() {
-        return energy;
-    }
-    public Double getLoudness() {
-        return loudness;
-    }
-    public Double getSpeechiness() {
-        return speechiness;
-    }
-    public Double getTempo() {
-        return tempo;
-    }
-    public Double getValence() {
-        return valence;
-    }
-    public String getGenre() {
-        return genre;
-    }
-
-    // Setters
-    public void setDanceability(double danceability) {
-        this.danceability = danceability;
-    }
-    public void setEnergy(double energy) {
-        this.energy = energy;
-    }
-    public void setLoudness(Double loudness) {
-        this.loudness = loudness;
-    }
-    public void setSpeechiness(double speechiness) {
-        this.speechiness = speechiness;
-    }
-    public void setTempo(double tempo) {
-        this.tempo = tempo;
-    }
-    public void setValence(double valence) {
-        this.valence = valence;
-    }
-    public void setGenre(String genre) {
+    public Recommendation(String[] genre) {
         this.genre = genre;
     }
 
-    public class Builder {
-        double danceability;
-        double energy;
-        double loudness;
-        double speechiness;
-        double tempo;
-        double valence;
-        String genre;
-
-        public Recommendation build() {
-            return new Recommendation(this);
-        }
-
-        public Builder danceability(double val) {
-            this.danceability = val;
-            return this;
-        }
-
-        public Builder energy(double val) {
-            this.energy = val;
-            return this;
-        }
-
-        public Builder loudness(double val) {
-            this.loudness = val;
-            return this;
-        }
-
-        public Builder speechiness(double val) {
-            this.speechiness = val;
-            return this;
-        }
-
-        public Builder tempo(double val) {
-            this.tempo = val;
-            return this;
-        }
-
-        public Builder valence(double val) {
-            this.valence = val;
-            return this;
-        }
-
-        public Builder genre(String val) {
-            this.genre = val;
-            return this;
-        }
+    public String[] getGenre() {
+        return genre;
+    }
+    public void setGenre(String[] genre) {
+        this.genre = genre;
     }
 }
