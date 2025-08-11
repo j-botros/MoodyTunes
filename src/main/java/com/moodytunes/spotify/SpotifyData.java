@@ -11,6 +11,15 @@ public class SpotifyData {
         public String refresh_token;
     }
 
+    public static class SearchedTracks {
+        public Tracks tracks;
+    }
+
+    public static class Tracks {
+        public TrackObject[] items;
+        public int total;
+    }
+
     public static class ClientAccessData {
         public String access_token;
         public String token_type;

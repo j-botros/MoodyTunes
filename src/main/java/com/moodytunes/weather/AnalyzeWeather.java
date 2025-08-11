@@ -47,7 +47,7 @@ public class AnalyzeWeather {
                 recommendation.setSpeechiness(0.4);
                 recommendation.setTempo(110.0);
                 recommendation.setValence(0.2);
-                recommendation.setGenre(Recommendation.SEED_GENRES.get("thunder"));
+                recommendation.setGenre(Recommendation.GENRES.get("thunder"));
                 break;
 
             // Drizzle
@@ -74,7 +74,7 @@ public class AnalyzeWeather {
                 recommendation.setSpeechiness(0.3);
                 recommendation.setTempo(80.0);
                 recommendation.setValence(0.35);
-                recommendation.setGenre(Recommendation.SEED_GENRES.get("drizzle"));
+                recommendation.setGenre(Recommendation.GENRES.get("drizzle"));
                 break;
 
             // Rain
@@ -103,7 +103,7 @@ public class AnalyzeWeather {
                 recommendation.setSpeechiness(0.3);
                 recommendation.setTempo(80.0);
                 recommendation.setValence(0.20);
-                recommendation.setGenre(Recommendation.SEED_GENRES.get("rain"));
+                recommendation.setGenre(Recommendation.GENRES.get("rain"));
                 break;
 
             // Snow
@@ -134,7 +134,7 @@ public class AnalyzeWeather {
                 recommendation.setSpeechiness(0.3);
                 recommendation.setTempo(80.0);
                 recommendation.setValence(0.7);
-                recommendation.setGenre(Recommendation.SEED_GENRES.get("snow"));
+                recommendation.setGenre(Recommendation.GENRES.get("snow"));
                 break;
 
             // Atmosphere
@@ -151,7 +151,7 @@ public class AnalyzeWeather {
                 recommendation.setSpeechiness(0.1);
                 recommendation.setTempo(60.0);
                 recommendation.setValence(0.4);
-                recommendation.setGenre(Recommendation.SEED_GENRES.get("foggy"));
+                recommendation.setGenre(Recommendation.GENRES.get("foggy"));
                 break;
 
             case WeatherCodes.DUST:
@@ -165,7 +165,7 @@ public class AnalyzeWeather {
                 recommendation.setSpeechiness(0.2);
                 recommendation.setTempo(100.0);
                 recommendation.setValence(0.4);
-                recommendation.setGenre(Recommendation.SEED_GENRES.get("sandy"));
+                recommendation.setGenre(Recommendation.GENRES.get("sandy"));
                 break;
 
             case WeatherCodes.VOLCANIC_ASH:
@@ -175,7 +175,7 @@ public class AnalyzeWeather {
                 recommendation.setSpeechiness(0.5);
                 recommendation.setTempo(120.0);
                 recommendation.setValence(0.3);
-                recommendation.setGenre(Recommendation.SEED_GENRES.get("volcanic-ash"));
+                recommendation.setGenre(Recommendation.GENRES.get("volcanic-ash"));
                 break;
 
             case WeatherCodes.SQUALLS:
@@ -185,7 +185,7 @@ public class AnalyzeWeather {
                 recommendation.setSpeechiness(0.3);
                 recommendation.setTempo(140.0);
                 recommendation.setValence(0.4);
-                recommendation.setGenre(Recommendation.SEED_GENRES.get("squalls"));
+                recommendation.setGenre(Recommendation.GENRES.get("squalls"));
                 break;
 
             case WeatherCodes.TORNADO:
@@ -195,7 +195,7 @@ public class AnalyzeWeather {
                 recommendation.setSpeechiness(0.6);
                 recommendation.setTempo(160.0);
                 recommendation.setValence(0.1);
-                recommendation.setGenre(Recommendation.SEED_GENRES.get("tornado"));
+                recommendation.setGenre(Recommendation.GENRES.get("tornado"));
                 break;
 
             // Clear
@@ -216,7 +216,7 @@ public class AnalyzeWeather {
                     recommendation.setSpeechiness(0.6);
                     recommendation.setTempo(120.0);
                     recommendation.setValence(1.0);
-                    recommendation.setGenre(Recommendation.SEED_GENRES.get("hot"));
+                    recommendation.setGenre(Recommendation.GENRES.get("hot"));
                 }
                 else if (TEMPERATURE >= 293.15) {
                     recommendation.setDanceability(0.7);
@@ -225,7 +225,7 @@ public class AnalyzeWeather {
                     recommendation.setSpeechiness(0.6);
                     recommendation.setTempo(90.0);
                     recommendation.setValence(0.7);
-                    recommendation.setGenre(Recommendation.SEED_GENRES.get("warm"));
+                    recommendation.setGenre(Recommendation.GENRES.get("warm"));
                 }
                 else if (TEMPERATURE >= 285.15) {
                     recommendation.setDanceability(0.5);
@@ -234,7 +234,7 @@ public class AnalyzeWeather {
                     recommendation.setSpeechiness(0.5);
                     recommendation.setTempo(75.0);
                     recommendation.setValence(0.6);
-                    recommendation.setGenre(Recommendation.SEED_GENRES.get("mild"));
+                    recommendation.setGenre(Recommendation.GENRES.get("mild"));
                 }
                 else {
                     recommendation.setDanceability(045);
@@ -243,7 +243,7 @@ public class AnalyzeWeather {
                     recommendation.setSpeechiness(0.4);
                     recommendation.setTempo(60.0);
                     recommendation.setValence(0.4);
-                    recommendation.setGenre(Recommendation.SEED_GENRES.get("cold"));
+                    recommendation.setGenre(Recommendation.GENRES.get("cold"));
                 }
         }
     }
