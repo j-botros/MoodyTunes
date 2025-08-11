@@ -84,7 +84,7 @@ public class SpotifyService {
         final String encodedQuery = URLEncoder.encode(recommendation.getGenre(), StandardCharsets.UTF_8);
         
         final String urlString = baseUrl
-            + "?q=" + encodedQuery
+            + "?q=" + "genre%3Apop"//encodedQuery
             + "&type=track"
             + "&market=US"
             + "&limit=20"
