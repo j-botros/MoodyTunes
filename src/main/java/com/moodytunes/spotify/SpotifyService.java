@@ -121,6 +121,7 @@ public class SpotifyService {
                 System.out.println("Full Response: " + responseJson);
                 return null;
             }
+            System.out.println("(searchTracks) Full Response: " + responseJson);
         }
         catch (InterruptedException e) {
             System.out.println("(searchTracks) Response interrupted: " + e);
@@ -139,12 +140,12 @@ public class SpotifyService {
             return null;
         }
 
-        SpotifyData.Tracks tracks = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.Tracks.class);
+        SpotifyData.SearchedTracks searched = MoodyTunesApp.GSON.fromJson(responseJson.body(), SpotifyData.SearchedTracks.class);
 
-        String[] trackUris = new String[tracks.items.length];
+        String[] trackUris = new String[searched.tracks.items.length];
 
-        for (int i = 0; i < tracks.items.length; i++) {
-            trackUris[i] = tracks.items[i].uri;
+        for (int i = 0; i < searched.tracks.items.length; i++) {
+            trackUris[i] = searched.tracks.items[i].uri;
         }
 
         System.out.println("Searched tracks: " + Arrays.toString(trackUris));
