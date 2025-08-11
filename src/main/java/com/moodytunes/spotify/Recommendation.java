@@ -4,19 +4,19 @@ import java.util.Map;
 
 public class Recommendation {
     public static final Map<String, String> GENRES = Map.ofEntries(
-        Map.entry("thunder", "genre:\"Metal\" OR genre:\"Nu Metal\" OR genre:\"Hard Rock\""),
-        Map.entry("drizzle", "genre:\"Ambient\" OR genre:\"R&b\""),
-        Map.entry("rain", "genre:\"Ambient\" OR genre:\"R&b\""),
-        Map.entry("snow", "genre:\"Ambient\"OR genre:\"R&b\""),
-        Map.entry("foggy", "genre:\"Soul\" OR genre:\"R&b\" OR genre:\"Psychedelic Rock\""),
-        Map.entry("sandy", "genre:\"trip-hop\" OR genre:\"trance\" OR genre:\"groove\""),
-        Map.entry("volcanic-ash", "genre:\"Grunge\" OR genre:\"Rock\" OR genre:\"Metal\""),
-        Map.entry("squalls", "genre:\"Ambient\" OR genre:\"R&b\""),
-        Map.entry("cold", "genre:\"Ambient\" OR genre:\"Pop\""),
-        Map.entry("mild", "genre:\"Pop\" OR genre:\"Rock\" OR genre:\"Hip Hop\" OR genre:\"Rap\""),
-        Map.entry("warm", "genre:\"Pop\" OR genre:\"Rock\" OR genre:\"Hip Hop\" OR genre:\"Rap\" OR genre:\"Dance Pop\" OR genre:\"Dance Rock\""),
-        Map.entry("hot", "genre:\"Pop\" OR genre:\"Dance Pop\" OR genre:\"Dance Rock\""),
-        Map.entry("tornado", "genre:\"Hardcore\" OR genre:\"Screamo\"")
+        Map.entry("thunder", "genre:\"Metal\""/* OR genre:\"Nu Metal\" OR genre:\"Hard Rock\"" */),
+        Map.entry("drizzle", "genre:\"Ambient\""/* OR genre:\"R&b\"" */),
+        Map.entry("rain", "genre:\"Ambient\""/* OR genre:\"R&b\"" */),
+        Map.entry("snow", "genre:\"Ambient\""/* OR genre:\"R&b\""*/),
+        Map.entry("foggy", /* "genre:\"Soul\" OR genre:\"R&b\" OR */"genre:\"Psychedelic Rock\""),
+        Map.entry("sandy", "genre:\"Soul\""/* OR genre:\"trance\" OR genre:\"groove\"" */),
+        Map.entry("volcanic-ash", "genre:\"Grunge\""/* OR genre:\"Rock\" OR genre:\"Metal\"" */),
+        Map.entry("squalls", /* "genre:\"Ambient\" OR */"genre:\"Rap\""),
+        Map.entry("cold", "genre:\"R&b\""/* OR genre:\"Pop\""*/),
+        Map.entry("mild", /*"genre:\"Pop\" OR genre:\"Rock\" OR */ "genre:\"Hip Hop\""/* OR genre:\"Rap\"" */),
+        Map.entry("warm", "genre:\"Pop\""/* OR genre:\"Rock\" OR genre:\"Hip Hop\" OR genre:\"Rap\" OR genre:\"Dance Pop\" OR genre:\"Dance Rock\""*/),
+        Map.entry("hot", /* "genre:\"Pop\" OR */"genre:\"Dance Pop\""/* OR genre:\"Dance Rock\""*/),
+        Map.entry("tornado", "genre:\"Hardcore\""/* OR genre:\"Screamo\""*/)
     );
     
     private double danceability;
